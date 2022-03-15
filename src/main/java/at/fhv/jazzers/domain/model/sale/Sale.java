@@ -10,11 +10,14 @@ import java.util.Set;
 @Entity
 public class Sale {
     // Properties
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long saleIdInternal;
 
     @Embedded
     private SaleId saleId;
+
+    private SaleType saleType;
 
     @OneToMany
     private Set<Line> lines;
@@ -32,8 +35,9 @@ public class Sale {
 
     }
 
-    public Sale(SaleId saleId, HashSet<Line> lines, Employee employee, Customer customer) {
+    public Sale(SaleId saleId, SaleType saleType, Set<Line> lines, Employee employee, Customer customer) {
         this.saleId = saleId;
+        this.saleType = saleType;
         this.lines = lines;
         this.employee = employee;
         this.customer = customer;
@@ -49,6 +53,10 @@ public class Sale {
     // Getters
     public SaleId saleId() {
         return saleId;
+    }
+
+    public SaleType saleType() {
+        return saleType;
     }
 
     public HashSet<Line> lines() {

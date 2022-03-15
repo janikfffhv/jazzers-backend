@@ -10,7 +10,8 @@ import java.util.Set;
 @Entity
 public class Work {
     // Properties
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long workIdInternal;
 
     @Embedded

@@ -6,7 +6,8 @@ import java.util.Objects;
 @Entity
 public class Interpret {
     // Properties
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private long interpretIdInternal;
 
     private String name;

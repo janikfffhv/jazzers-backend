@@ -21,15 +21,15 @@ public class Product {
 
     private String title;
 
-    private Type type;
-
-    private LocalDate releaseDate;
+    private int releaseYear;
 
     private double price;
 
-    private Medium medium;
-
     private int stock;
+
+    private ProductType productType;
+
+    private Medium medium;
 
     @ManyToOne
     private Label label;
@@ -53,14 +53,14 @@ public class Product {
 
     }
 
-    public Product(ProductId productId, String title, Type type, LocalDate releaseDate, double price, Medium medium, int stock, Label label, HashSet<Supplier> supplier, HashSet<Work> works, HashSet<Sale> sales, HashSet<Customer> customers) {
+    public Product(ProductId productId, String title, int releaseYear, double price, int stock, ProductType productType, Medium medium, Label label, HashSet<Supplier> supplier, HashSet<Work> works, HashSet<Sale> sales, HashSet<Customer> customers) {
         this.productId = productId;
         this.title = title;
-        this.type = type;
-        this.releaseDate = releaseDate;
+        this.releaseYear = releaseYear;
         this.price = price;
-        this.medium = medium;
         this.stock = stock;
+        this.productType = productType;
+        this.medium = medium;
         this.label = label;
         this.supplier = supplier;
         this.works = works;
@@ -76,51 +76,51 @@ public class Product {
 
 
     // Getters
-    public ProductId getProductId() {
+    public ProductId productId() {
         return productId;
     }
 
-    public String getTitle() {
+    public String title() {
         return title;
     }
 
-    public Type getType() {
-        return type;
+    public int releaseYear() {
+        return releaseYear;
     }
 
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    public double getPrice() {
+    public double price() {
         return price;
     }
 
-    public Medium getMedium() {
-        return medium;
-    }
-
-    public int getStock() {
+    public int stock() {
         return stock;
     }
 
-    public Label getLabel() {
+    public ProductType productType() {
+        return productType;
+    }
+
+    public Medium medium() {
+        return medium;
+    }
+
+    public Label label() {
         return label;
     }
 
-    public HashSet<Supplier> getSupplier() {
+    public HashSet<Supplier> supplier() {
         return (HashSet<Supplier>) Set.copyOf(supplier);
     }
 
-    public HashSet<Work> getWorks() {
+    public HashSet<Work> works() {
         return (HashSet<Work>) Set.copyOf(works);
     }
 
-    public HashSet<Sale> getSales() {
+    public HashSet<Sale> sales() {
         return (HashSet<Sale>) Set.copyOf(sales);
     }
 
-    public HashSet<Customer> getCustomers() {
+    public HashSet<Customer> customers() {
         return (HashSet<Customer>) Set.copyOf(customers);
     }
 }

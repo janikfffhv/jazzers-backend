@@ -1,6 +1,6 @@
 package at.fhv.jazzers.domain.model.product;
 
-public enum Type {
+public enum ProductType {
     SINGLE,
     ALBUM
 }

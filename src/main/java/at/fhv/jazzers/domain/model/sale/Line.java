@@ -8,7 +8,8 @@ import java.util.Objects;
 @Entity
 public class Line {
     // Properties
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long lineIdInternal;
 
     private int amount;

@@ -18,27 +18,29 @@ public class Employee {
 
     private String email;
 
+    private String userId;
+
     private String password;
 
     private String firstName;
 
     private String lastName;
 
+    // TODO: Allow multiple roles (Multiplicity annotations do not work? Maybe annotate with @ElementCollection?)
     private Role role;
 
     @OneToMany
     private Set<Sale> sales;
-
-
 
     // Constructors
     protected Employee() {
 
     }
 
-    public Employee(EmployeeId employeeId, String email, String password, String firstName, String lastName, Role role, HashSet<Sale> sales) {
+    public Employee(EmployeeId employeeId, String email, String userId, String password, String firstName, String lastName, Role role, HashSet<Sale> sales) {
         this.employeeId = employeeId;
         this.email = email;
+        this.userId = userId;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,6 +62,10 @@ public class Employee {
 
     public String email() {
         return email;
+    }
+
+    public String userId() {
+        return userId;
     }
 
     public String password() {

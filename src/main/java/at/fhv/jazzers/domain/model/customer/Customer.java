@@ -19,6 +19,8 @@ public class Customer {
 
     private String email;
 
+    private String userId;
+
     private String password;
 
     private String firstName;
@@ -45,9 +47,10 @@ public class Customer {
 
     }
 
-    public Customer(CustomerId customerId, String email, String password, String firstName, String lastName, LocalDate birthDate, String iban, Address address, HashSet<Sale> sales, HashSet<Playlist> playlists) {
+    public Customer(CustomerId customerId, String email, String userId, String password, String firstName, String lastName, LocalDate birthDate, String iban, Address address, HashSet<Sale> sales, HashSet<Playlist> playlists) {
         this.customerId = customerId;
         this.email = email;
+        this.userId = userId;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -72,6 +75,10 @@ public class Customer {
 
     public String email() {
         return email;
+    }
+
+    public String userId() {
+        return userId;
     }
 
     public String password() {
