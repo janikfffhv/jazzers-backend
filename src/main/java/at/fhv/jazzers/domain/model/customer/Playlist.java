@@ -18,9 +18,6 @@ public class Playlist {
 
     private String name;
 
-    @ManyToOne
-    private Customer customer;
-
     @ManyToMany()
     private Set<Work> works;
 
@@ -34,7 +31,6 @@ public class Playlist {
     public Playlist(PlaylistId playlistId, String name, Customer customer, Set<Work> works) {
         this.playlistId = playlistId;
         this.name = name;
-        this.customer = customer;
         this.works = works;
     }
 
@@ -52,10 +48,6 @@ public class Playlist {
 
     public String name() {
         return name;
-    }
-
-    public Customer customer() {
-        return customer;
     }
 
     public HashSet<Work> works() {
