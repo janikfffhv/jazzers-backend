@@ -2,11 +2,13 @@ package at.fhv.jazzers.domain.model.product;
 
 import at.fhv.jazzers.domain.model.customer.Customer;
 import at.fhv.jazzers.domain.model.sale.Sale;
+import at.fhv.jazzers.domain.model.work.Interpret;
 import at.fhv.jazzers.domain.model.work.Work;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,24 +29,17 @@ public class Product {
 
     private int stock;
 
-    private ProductType productType;
-
+    @Enumerated(EnumType.STRING)
     private Medium medium;
 
     @ManyToOne
     private Label label;
 
     @ManyToMany
-    private Set<Supplier> supplier;
+    private List<Supplier> supplier;
 
     @ManyToMany
-    private Set<Work> works;
-
-    @ManyToMany
-    private Set<Sale> sales;
-
-    @ManyToMany
-    private Set<Customer> customers;
+    private List<Work> works;
 
 
 
@@ -53,19 +48,16 @@ public class Product {
 
     }
 
-    public Product(ProductId productId, String title, int releaseYear, double price, int stock, ProductType productType, Medium medium, Label label, HashSet<Supplier> supplier, HashSet<Work> works, HashSet<Sale> sales, HashSet<Customer> customers) {
+    public Product(ProductId productId, String title, int releaseYear, double price, int stock, Medium medium, Label label, List<Supplier> supplier, List<Work> works) {
         this.productId = productId;
         this.title = title;
         this.releaseYear = releaseYear;
         this.price = price;
         this.stock = stock;
-        this.productType = productType;
         this.medium = medium;
         this.label = label;
         this.supplier = supplier;
         this.works = works;
-        this.sales = sales;
-        this.customers = customers;
     }
 
 
@@ -96,10 +88,6 @@ public class Product {
         return stock;
     }
 
-    public ProductType productType() {
-        return productType;
-    }
-
     public Medium medium() {
         return medium;
     }
@@ -108,19 +96,15 @@ public class Product {
         return label;
     }
 
-    public HashSet<Supplier> supplier() {
-        return (HashSet<Supplier>) Set.copyOf(supplier);
+    public List<Supplier> supplier() {
+        return List.copyOf(supplier);
     }
 
-    public HashSet<Work> works() {
-        return (HashSet<Work>) Set.copyOf(works);
+    public List<Work> works() {
+        return List.copyOf(works);
     }
 
-    public HashSet<Sale> sales() {
-        return (HashSet<Sale>) Set.copyOf(sales);
-    }
-
-    public HashSet<Customer> customers() {
-        return (HashSet<Customer>) Set.copyOf(customers);
+    public Interpret interpret() {
+        return works().get(0).interpret();
     }
 }

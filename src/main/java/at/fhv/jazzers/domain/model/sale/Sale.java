@@ -4,8 +4,7 @@ import at.fhv.jazzers.domain.model.customer.Customer;
 import at.fhv.jazzers.domain.model.employee.Employee;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Sale {
@@ -17,10 +16,11 @@ public class Sale {
     @Embedded
     private SaleId saleId;
 
+    @Enumerated(EnumType.STRING)
     private SaleType saleType;
 
     @OneToMany
-    private Set<Line> lines;
+    private List<Line> lines;
 
     @ManyToOne
     private Employee employee;
@@ -35,7 +35,7 @@ public class Sale {
 
     }
 
-    public Sale(SaleId saleId, SaleType saleType, Set<Line> lines, Employee employee, Customer customer) {
+    public Sale(SaleId saleId, SaleType saleType, List<Line> lines, Employee employee, Customer customer) {
         this.saleId = saleId;
         this.saleType = saleType;
         this.lines = lines;
@@ -59,8 +59,8 @@ public class Sale {
         return saleType;
     }
 
-    public HashSet<Line> lines() {
-        return (HashSet<Line>) Set.copyOf(lines);
+    public List<Line> lines() {
+        return List.copyOf(lines);
     }
 
     public Employee employee() {

@@ -3,8 +3,7 @@ package at.fhv.jazzers.domain.model.employee;
 import at.fhv.jazzers.domain.model.sale.Sale;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Employee {
@@ -26,18 +25,16 @@ public class Employee {
 
     private String lastName;
 
-    // TODO: Allow multiple roles (Multiplicity annotations do not work? Maybe annotate with @ElementCollection?)
-    private Role role;
-
-    @OneToMany
-    private Set<Sale> sales;
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    private List<Role> role;
 
     // Constructors
     protected Employee() {
 
     }
 
-    public Employee(EmployeeId employeeId, String email, String userId, String password, String firstName, String lastName, Role role, HashSet<Sale> sales) {
+    public Employee(EmployeeId employeeId, String email, String userId, String password, String firstName, String lastName, List<Role> role) {
         this.employeeId = employeeId;
         this.email = email;
         this.userId = userId;
@@ -45,7 +42,6 @@ public class Employee {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
-        this.sales = sales;
     }
 
 
@@ -80,11 +76,7 @@ public class Employee {
         return lastName;
     }
 
-    public Role role() {
-        return role;
-    }
-
-    public HashSet<Sale> sales() {
-        return (HashSet<Sale>) Set.copyOf(sales);
+    public List<Role> role() {
+        return List.copyOf(role);
     }
 }

@@ -4,8 +4,7 @@ import at.fhv.jazzers.domain.model.sale.Sale;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -35,10 +34,10 @@ public class Customer {
     private Address address;
 
     @OneToMany()
-    private Set<Sale> sales;
+    private List<Sale> sales;
 
     @OneToMany()
-    private Set<Playlist> playlists;
+    private List<Playlist> playlists;
 
 
 
@@ -47,7 +46,7 @@ public class Customer {
 
     }
 
-    public Customer(CustomerId customerId, String email, String userId, String password, String firstName, String lastName, LocalDate birthDate, String iban, Address address, HashSet<Sale> sales, HashSet<Playlist> playlists) {
+    public Customer(CustomerId customerId, String email, String userId, String password, String firstName, String lastName, LocalDate birthDate, String iban, Address address, List<Sale> sales, List<Playlist> playlists) {
         this.customerId = customerId;
         this.email = email;
         this.userId = userId;
@@ -105,11 +104,11 @@ public class Customer {
         return address;
     }
 
-    public HashSet<Sale> sales() {
-        return (HashSet<Sale>) Set.copyOf(sales);
+    public List<Sale> sales() {
+        return List.copyOf(sales);
     }
 
-    public HashSet<Playlist> playlists() {
-        return (HashSet<Playlist>) Set.copyOf(playlists);
+    public List<Playlist> playlists() {
+        return List.copyOf(playlists);
     }
 }

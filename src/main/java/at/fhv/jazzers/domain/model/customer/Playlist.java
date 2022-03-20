@@ -3,8 +3,7 @@ package at.fhv.jazzers.domain.model.customer;
 import at.fhv.jazzers.domain.model.work.Work;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Playlist {
@@ -19,7 +18,7 @@ public class Playlist {
     private String name;
 
     @ManyToMany()
-    private Set<Work> works;
+    private List<Work> works;
 
 
 
@@ -28,7 +27,7 @@ public class Playlist {
 
     }
 
-    public Playlist(PlaylistId playlistId, String name, Customer customer, Set<Work> works) {
+    public Playlist(PlaylistId playlistId, String name, Customer customer, List<Work> works) {
         this.playlistId = playlistId;
         this.name = name;
         this.works = works;
@@ -50,7 +49,7 @@ public class Playlist {
         return name;
     }
 
-    public HashSet<Work> works() {
-        return (HashSet<Work>) Set.copyOf(works);
+    public List<Work> works() {
+        return List.copyOf(works);
     }
 }
