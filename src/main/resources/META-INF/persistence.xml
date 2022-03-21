@@ -6,20 +6,20 @@
     <persistence-unit name="Test">
         <description>Hibernate EntityManager</description>
 
-        <class>at.fhv.jazzers.domain.model.customer.Customer</class>
-        <class>at.fhv.jazzers.domain.model.customer.Playlist</class>
+        <class>at.fhv.jazzers.backend.domain.model.customer.Customer</class>
+        <class>at.fhv.jazzers.backend.domain.model.customer.Playlist</class>
 
-        <class>at.fhv.jazzers.domain.model.employee.Employee</class>
+        <class>at.fhv.jazzers.backend.domain.model.employee.Employee</class>
 
-        <class>at.fhv.jazzers.domain.model.product.Label</class>
-        <class>at.fhv.jazzers.domain.model.product.Product</class>
-        <class>at.fhv.jazzers.domain.model.product.Supplier</class>
+        <class>at.fhv.jazzers.backend.domain.model.product.Label</class>
+        <class>at.fhv.jazzers.backend.domain.model.product.Product</class>
+        <class>at.fhv.jazzers.backend.domain.model.product.Supplier</class>
 
-        <class>at.fhv.jazzers.domain.model.sale.Line</class>
-        <class>at.fhv.jazzers.domain.model.sale.Sale</class>
+        <class>at.fhv.jazzers.backend.domain.model.sale.Line</class>
+        <class>at.fhv.jazzers.backend.domain.model.sale.Sale</class>
 
-        <class>at.fhv.jazzers.domain.model.work.Interpret</class>
-        <class>at.fhv.jazzers.domain.model.work.Work</class>
+        <class>at.fhv.jazzers.backend.domain.model.work.Interpret</class>
+        <class>at.fhv.jazzers.backend.domain.model.work.Work</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
