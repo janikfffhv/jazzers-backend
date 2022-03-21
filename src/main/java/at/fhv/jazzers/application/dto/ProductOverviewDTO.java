@@ -13,18 +13,20 @@ public class ProductOverviewDTO {
     private final String interpret;
     private final String title;
     private final Medium medium;
+    private final int stock;
     private final double price;
 
-    private ProductOverviewDTO(UUID productId, String interpret, String title, Medium medium, double price) {
+    private ProductOverviewDTO(UUID productId, String interpret, String title, Medium medium, int stock, double price) {
         this.productId = productId;
         this.interpret = interpret;
         this.title = title;
         this.medium = medium;
+        this.stock = stock;
         this.price = price;
     }
 
     public static ProductOverviewDTO create(Product product) {
-        return new ProductOverviewDTO(product.productId().id(), product.interpret().name(), product.title(), product.medium(), product.price());
+        return new ProductOverviewDTO(product.productId().id(), product.interpret().name(), product.title(), product.medium(), product.stock(), product.price());
     }
 
     public static List<ProductOverviewDTO> createAsList(List<Product> products) {
@@ -47,6 +49,10 @@ public class ProductOverviewDTO {
         return medium;
     }
 
+    public int stock() {
+        return stock;
+    }
+
     public double price() {
         return price;
     }
@@ -56,11 +62,11 @@ public class ProductOverviewDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductOverviewDTO that = (ProductOverviewDTO) o;
-        return Double.compare(that.price, price) == 0 && productId.equals(that.productId) && interpret.equals(that.interpret) && title.equals(that.title) && medium == that.medium;
+        return stock == that.stock && Double.compare(that.price, price) == 0 && productId.equals(that.productId) && interpret.equals(that.interpret) && title.equals(that.title) && medium == that.medium;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productId, interpret, title, medium, price);
+        return Objects.hash(productId, interpret, title, medium, stock, price);
     }
 }
