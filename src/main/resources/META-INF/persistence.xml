@@ -11,6 +11,8 @@
 
         <class>at.fhv.jazzers.backend.domain.model.employee.Employee</class>
 
+        <class>at.fhv.jazzers.backend.domain.model.interpret.Interpret</class>
+
         <class>at.fhv.jazzers.backend.domain.model.product.Label</class>
         <class>at.fhv.jazzers.backend.domain.model.product.Product</class>
         <class>at.fhv.jazzers.backend.domain.model.product.Supplier</class>
@@ -18,7 +20,6 @@
         <class>at.fhv.jazzers.backend.domain.model.sale.Line</class>
         <class>at.fhv.jazzers.backend.domain.model.sale.Sale</class>
 
-        <class>at.fhv.jazzers.backend.domain.model.work.Interpret</class>
         <class>at.fhv.jazzers.backend.domain.model.work.Work</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
@@ -26,8 +27,8 @@
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
 
-            <!-- <property name="hibernate.hbm2ddl.auto" value="update"/> -->
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <!-- <property name="hibernate.hbm2ddl.auto" value="create"/> -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
 
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>

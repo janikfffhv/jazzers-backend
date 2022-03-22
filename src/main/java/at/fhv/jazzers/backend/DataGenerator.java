@@ -5,11 +5,12 @@ import at.fhv.jazzers.backend.domain.model.customer.Customer;
 import at.fhv.jazzers.backend.domain.model.customer.CustomerId;
 import at.fhv.jazzers.backend.domain.model.customer.Playlist;
 import at.fhv.jazzers.backend.domain.model.employee.Employee;
+import at.fhv.jazzers.backend.domain.model.interpret.Interpret;
+import at.fhv.jazzers.backend.domain.model.interpret.InterpretId;
 import at.fhv.jazzers.backend.domain.model.product.*;
 import at.fhv.jazzers.backend.domain.model.sale.Line;
 import at.fhv.jazzers.backend.domain.model.sale.Sale;
 import at.fhv.jazzers.backend.domain.model.work.Genre;
-import at.fhv.jazzers.backend.domain.model.work.Interpret;
 import at.fhv.jazzers.backend.domain.model.work.Work;
 import at.fhv.jazzers.backend.domain.model.work.WorkId;
 
@@ -22,17 +23,13 @@ import java.util.UUID;
 public class DataGenerator {
     private static final List<Customer> customers = new ArrayList<>();
     private static final List<Playlist> playlists = new ArrayList<>();
-
     private static final List<Employee> employees = new ArrayList<>();
-
+    private static final List<Interpret> interprets = new ArrayList<>();
     private static final List<Label> labels = new ArrayList<>();
     private static final List<Product> products = new ArrayList<>();
     private static final List<Supplier> suppliers = new ArrayList<>();
-
     private static final List<Line> lines = new ArrayList<>();
     private static final List<Sale> sales = new ArrayList<>();
-
-    private static final List<Interpret> interprets = new ArrayList<>();
     private static final List<Work> works = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -46,46 +43,52 @@ public class DataGenerator {
         Customer customer1 = new Customer(new CustomerId(UUID.randomUUID()), "maxmustermann@gmail.com", "maxie55", "ichliebemaxine", "Max", "Mustermann", LocalDate.of(1999, 10, 11), "AT00 0000 0000 0000", address1, List.of(), List.of());
         customers.add(customer1);
 
-        Interpret interpret1 = new Interpret("Interpret 1");
-        Interpret interpret2 = new Interpret("Interpret 2");
-        Interpret interpret3 = new Interpret("Interpret 3");
-        Interpret interpret4 = new Interpret("Interpret 4");
-        interprets.add(interpret1);
-        interprets.add(interpret2);
-        interprets.add(interpret3);
-        interprets.add(interpret4);
-
         Supplier supplier1 = new Supplier("Supplier 1");
         Supplier supplier2 = new Supplier("Supplier 2");
         Supplier supplier3 = new Supplier("Supplier 3");
         Supplier supplier4 = new Supplier("Supplier 4");
-        suppliers.add(supplier1);
-        suppliers.add(supplier2);
-        suppliers.add(supplier3);
-        suppliers.add(supplier4);
+        suppliers.addAll(List.of(supplier1, supplier2, supplier3, supplier4));
 
-        Label label1 = new Label("Label 1");
-        Label label2 = new Label("Label 2");
-        Label label3 = new Label("Label 3");
-        Label label4 = new Label("Label 4");
-        labels.add(label1);
-        labels.add(label2);
-        labels.add(label3);
-        labels.add(label4);
+        Label columbiaRecords = new Label("Columbia Records");
+        Label warnerBrothersRecords = new Label("Warner Brothers Records");
+        Label risingRecords = new Label("Rising Records");
+        labels.addAll(List.of(columbiaRecords, warnerBrothersRecords, risingRecords));
 
-        Work work1 = new Work(new WorkId(UUID.randomUUID()), "Work 1", 123, 2020, interpret1, Genre.JAZZ);
-        Work work2 = new Work(new WorkId(UUID.randomUUID()), "Work 2", 189, 2020, interpret2, Genre.ROCK);
-        Work work3 = new Work(new WorkId(UUID.randomUUID()), "Work 3", 154, 2020, interpret3, Genre.METAL);
-        Work work4 = new Work(new WorkId(UUID.randomUUID()), "Work 4", 154, 2020, interpret4, Genre.NIGHTCORE);
-        works.add(work1);
-        works.add(work2);
-        works.add(work3);
-        works.add(work4);
+        Interpret milesDavis = new Interpret(new InterpretId(UUID.randomUUID()), "Miles Davis");
+        Interpret linkinPark = new Interpret(new InterpretId(UUID.randomUUID()), "Linkin Park");
+        Interpret bleedFromWithin = new Interpret(new InterpretId(UUID.randomUUID()), "Bleed From Within");
+        interprets.addAll(List.of(milesDavis, linkinPark, bleedFromWithin));
 
-        Product product1 = new Product(new ProductId(UUID.randomUUID()), "Product 1", 2020, 9.99d, 10, Medium.CD, label1, List.of(supplier1, supplier2), List.of(work1, work2, work3));
-        Product product2 = new Product(new ProductId(UUID.randomUUID()), "Product 2", 2020, 24.99d, 20, Medium.VINYL, label2, List.of(supplier3, supplier4), List.of(work4));
-        products.add(product1);
-        products.add(product2);
+        Work kindOfBlue1 = new Work(new WorkId(UUID.randomUUID()), "So What", 545, 1959, milesDavis, Genre.JAZZ);
+        Work kindOfBlue2 = new Work(new WorkId(UUID.randomUUID()), "Freddie Freeloader", 975, 1959, milesDavis, Genre.JAZZ);
+        Work kindOfBlue3 = new Work(new WorkId(UUID.randomUUID()), "Blue in Green", 328, 1959, milesDavis, Genre.JAZZ);
+        Work kindOfBlue4 = new Work(new WorkId(UUID.randomUUID()), "All Blues", 693, 1959, milesDavis, Genre.JAZZ);
+        Work kindOfBlue5 = new Work(new WorkId(UUID.randomUUID()), "Flamenco Sketches", 565, 1959, milesDavis, Genre.JAZZ);
+        List<Work> kindOfBlueWorks = List.of(kindOfBlue1, kindOfBlue2, kindOfBlue3, kindOfBlue4, kindOfBlue5);
+        works.addAll(kindOfBlueWorks);
+
+        Work meteora1 = new Work(new WorkId(UUID.randomUUID()), "Don't Stay", 187,2003, linkinPark, Genre.ROCK);
+        Work meteora2 = new Work(new WorkId(UUID.randomUUID()), "Somewhere I Belong", 197, 2003, linkinPark, Genre.ROCK);
+        Work meteora3 = new Work(new WorkId(UUID.randomUUID()), "Lying from You", 175, 2003, linkinPark, Genre.ROCK);
+        Work meteora4 = new Work(new WorkId(UUID.randomUUID()), "Hit the Floor", 164, 2003, linkinPark, Genre.ROCK);
+        Work meteora5 = new Work(new WorkId(UUID.randomUUID()), "Easier to Run", 204, 2003, linkinPark, Genre.ROCK);
+        List<Work> meteoraWorks = List.of(meteora1, meteora2, meteora3, meteora4, meteora5);
+        works.addAll(meteoraWorks);
+
+        Work humanity1 = new Work(new WorkId(UUID.randomUUID()), "The Awakening", 125, 2009, bleedFromWithin, Genre.METAL);
+        Work humanity2 = new Work(new WorkId(UUID.randomUUID()), "Damnation", 205, 2009, bleedFromWithin, Genre.METAL);
+        Work humanity3 = new Work(new WorkId(UUID.randomUUID()), "Messiah", 213, 2009, bleedFromWithin, Genre.METAL);
+        Work humanity4 = new Work(new WorkId(UUID.randomUUID()), "The Fall of Man", 204, 2009, bleedFromWithin, Genre.METAL);
+        Work humanity5 = new Work(new WorkId(UUID.randomUUID()), "Monster", 173, 2009, bleedFromWithin, Genre.METAL);
+        List<Work> humanityWorks = List.of(humanity1, humanity2, humanity3, humanity4, humanity5);
+        works.addAll(humanityWorks);
+
+        Product kindOfBlueVinyl = new Product(new ProductId(UUID.randomUUID()), "Kind Of Blue", milesDavis, 1959, 22.99d, 20, Medium.VINYL, columbiaRecords, List.of(supplier1, supplier2, supplier3, supplier4), kindOfBlueWorks);
+        Product meteoraVinyl = new Product(new ProductId(UUID.randomUUID()), "Meteora", linkinPark, 2003, 14.99d, 12, Medium.VINYL, warnerBrothersRecords, List.of(supplier1, supplier2), meteoraWorks);
+        Product meteoraCD = new Product(new ProductId(UUID.randomUUID()), "Meteora", linkinPark, 2005, 9.99d, 33, Medium.CD, warnerBrothersRecords, List.of(supplier2, supplier3), meteoraWorks);
+        Product humanityCD = new Product(new ProductId(UUID.randomUUID()), "Humanity", bleedFromWithin, 2009, 19.99d, 2, Medium.CD, risingRecords, List.of(supplier3, supplier4), humanityWorks);
+        Product humanityMP3 = new Product(new ProductId(UUID.randomUUID()), "Humanity", bleedFromWithin, 2009, 19.99d, 0, Medium.MP3, risingRecords, List.of(), humanityWorks);
+        products.addAll(List.of(kindOfBlueVinyl, meteoraVinyl, meteoraCD, humanityCD, humanityMP3));
     }
 
     private static void persistData() {

@@ -1,6 +1,9 @@
 package at.fhv.jazzers.backend.domain.model.work;
 
+import at.fhv.jazzers.backend.domain.model.interpret.Interpret;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Work {

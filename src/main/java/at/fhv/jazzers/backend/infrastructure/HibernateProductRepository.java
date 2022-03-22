@@ -10,12 +10,12 @@ import java.util.List;
 public class HibernateProductRepository implements ProductRepository {
     private final EntityManager entityManager = ServiceRegistry.entityManager();
 
+    // ToDo: Maybe split this in two methods: one that returns only MP3 and one that returns everything but MP3?
     @Override
     public List<Product> searchByTitleOrInterpret(String searchString) {
-        // TODO: Make it search ArtistName too with a JOIN or something.
         return entityManager
-                .createQuery("SELECT p FROM Product p WHERE p.title = :searchString", Product.class)
-                .setParameter("searchString", searchString)
+                .createQuery("SELECT p FROM Product p LEFT JOIN Interpret i ON i.interpretIdInternal = p.interpret.interpretIdInternal WHERE LOWER(p.title) LIKE LOWER(:searchString) OR LOWER(i.name) LIKE LOWER(:searchString)", Product.class)
+                .setParameter("searchString", "%" + searchString + "%")
                 .getResultList();
     }
 }

@@ -1,6 +1,6 @@
 package at.fhv.jazzers.backend.domain.model.product;
 
-import at.fhv.jazzers.backend.domain.model.work.Interpret;
+import at.fhv.jazzers.backend.domain.model.interpret.Interpret;
 import at.fhv.jazzers.backend.domain.model.work.Work;
 
 import javax.persistence.*;
@@ -17,6 +17,9 @@ public class Product {
     private ProductId productId;
 
     private String title;
+
+    @ManyToOne
+    private Interpret interpret;
 
     private int releaseYear;
 
@@ -43,9 +46,10 @@ public class Product {
 
     }
 
-    public Product(ProductId productId, String title, int releaseYear, double price, int stock, Medium medium, Label label, List<Supplier> supplier, List<Work> works) {
+    public Product(ProductId productId, String title, Interpret interpret, int releaseYear, double price, int stock, Medium medium, Label label, List<Supplier> supplier, List<Work> works) {
         this.productId = productId;
         this.title = title;
+        this.interpret = interpret;
         this.releaseYear = releaseYear;
         this.price = price;
         this.stock = stock;
@@ -69,6 +73,10 @@ public class Product {
 
     public String title() {
         return title;
+    }
+
+    public Interpret interpret() {
+        return interpret;
     }
 
     public int releaseYear() {
@@ -97,9 +105,5 @@ public class Product {
 
     public List<Work> works() {
         return List.copyOf(works);
-    }
-
-    public Interpret interpret() {
-        return works().get(0).interpret();
     }
 }
