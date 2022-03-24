@@ -11,7 +11,7 @@ public class Server {
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
 
             // Bind Services
-            Naming.rebind("rmi://localhost/productService", ServiceRegistry.productService());
+            Naming.rebind("rmi://localhost/productService", ServiceRegistry.rmi_productService());
         } catch (Exception e) {
             e.printStackTrace();
         }
