@@ -1,12 +1,14 @@
 package at.fhv.jazzers.backend.domain.model.sale;
 
+import at.fhv.jazzers.backend.domain.model.product.Medium;
 import at.fhv.jazzers.backend.domain.model.product.Product;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Line {
+public class Line implements Serializable {
     // Properties
     @Id
     @GeneratedValue
@@ -38,6 +40,10 @@ public class Line {
 
     public Product product() {
         return product;
+    }
+
+    public double lineTotal() {
+        return amount * product().price();
     }
 
 

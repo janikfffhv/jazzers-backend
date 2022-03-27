@@ -1,35 +1,56 @@
 package at.fhv.jazzers.backend;
 
 import at.fhv.jazzers.backend.application.api.ProductService;
+import at.fhv.jazzers.backend.application.api.SaleService;
 import at.fhv.jazzers.backend.application.impl.ProductServiceImpl;
+import at.fhv.jazzers.backend.application.impl.SaleServiceImpl;
 import at.fhv.jazzers.backend.communication.RMI_ProductServiceImpl;
+import at.fhv.jazzers.backend.communication.RMI_SaleServiceImpl;
+import at.fhv.jazzers.backend.domain.repository.CustomerRepository;
 import at.fhv.jazzers.backend.domain.repository.ProductRepository;
+import at.fhv.jazzers.backend.domain.repository.SaleRepository;
+import at.fhv.jazzers.backend.infrastructure.HibernateCustomerRepository;
 import at.fhv.jazzers.backend.infrastructure.HibernateProductRepository;
+import at.fhv.jazzers.backend.infrastructure.HibernateSaleRepository;
 import at.fhv.jazzers.shared.api.RMI_ProductService;
+import at.fhv.jazzers.shared.api.RMI_SaleService;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.rmi.RemoteException;
 
 public class ServiceRegistry {
-    private static EntityManagerFactory entityManagerFactory;
+    private static EntityManager entityManager;
+
     private static ProductService productService;
+    private static SaleService saleService;
+
     private static RMI_ProductService rmi_productService;
+    private static RMI_SaleService rmi_saleService;
+
+    private static CustomerRepository customerRepository;
     private static ProductRepository productRepository;
+    private static SaleRepository saleRepository;
 
     public static EntityManager entityManager() {
-        if (entityManagerFactory == null) {
-            entityManagerFactory = Persistence.createEntityManagerFactory("Test");
+        if (entityManager == null) {
+            entityManager = Persistence.createEntityManagerFactory("Test").createEntityManager();
         }
-        return entityManagerFactory.createEntityManager();
+        return entityManager;
     }
 
     public static ProductService productService() {
         if (productService == null) {
-            productService = new ProductServiceImpl();
+            productService = new ProductServiceImpl(productRepository());
         }
         return productService;
+    }
+
+    public static SaleService saleService() {
+        if (saleService == null) {
+            saleService = new SaleServiceImpl(entityManager(), customerRepository(), productRepository(), saleRepository());
+        }
+        return saleService;
     }
 
     public static RMI_ProductService rmi_productService() throws RemoteException {
@@ -39,10 +60,31 @@ public class ServiceRegistry {
         return rmi_productService;
     }
 
+    public static RMI_SaleService rmi_saleService() throws RemoteException {
+        if (rmi_saleService == null) {
+            rmi_saleService = new RMI_SaleServiceImpl(saleService());
+        }
+        return rmi_saleService;
+    }
+
+    public static CustomerRepository customerRepository() {
+        if (customerRepository == null) {
+            customerRepository = new HibernateCustomerRepository();
+        }
+        return customerRepository;
+    }
+
     public static ProductRepository productRepository() {
         if (productRepository == null) {
             productRepository = new HibernateProductRepository();
         }
         return productRepository;
+    }
+
+    public static SaleRepository saleRepository() {
+        if (saleRepository == null) {
+            saleRepository = new HibernateSaleRepository();
+        }
+        return saleRepository;
     }
 }

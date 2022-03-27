@@ -33,10 +33,10 @@ public class Customer {
     @Embedded
     private Address address;
 
-    @OneToMany()
+    @OneToMany
     private List<Sale> sales;
 
-    @OneToMany()
+    @OneToMany
     private List<Playlist> playlists;
 
 

@@ -62,7 +62,21 @@ public class Product {
 
 
     // Domain Methods
-    // -
+    public void takeFromStock(int amount) {
+        if (canMeetDemand(amount)) {
+            if (!medium().equals(Medium.MP3)) {
+                stock -= amount;
+            }
+        } else {
+            throw new IllegalArgumentException("Not enough stock available.");
+        }
+    }
+
+    public void addToStock(int amount) {
+        if (!medium().equals(Medium.MP3)) {
+            stock += amount;
+        }
+    }
 
 
 
@@ -105,5 +119,9 @@ public class Product {
 
     public List<Work> works() {
         return List.copyOf(works);
+    }
+
+    public boolean canMeetDemand(int demand) {
+        return medium().equals(Medium.MP3) || demand <= stock;
     }
 }

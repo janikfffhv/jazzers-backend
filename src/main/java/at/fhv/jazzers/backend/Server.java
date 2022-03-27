@@ -12,6 +12,7 @@ public class Server {
 
             // Bind Services
             Naming.rebind("rmi://localhost/productService", ServiceRegistry.rmi_productService());
+            Naming.rebind("rmi://localhost/saleService", ServiceRegistry.rmi_saleService());
         } catch (Exception e) {
             e.printStackTrace();
         }

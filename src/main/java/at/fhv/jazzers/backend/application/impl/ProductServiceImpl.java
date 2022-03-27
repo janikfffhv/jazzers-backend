@@ -1,6 +1,5 @@
 package at.fhv.jazzers.backend.application.impl;
 
-import at.fhv.jazzers.backend.ServiceRegistry;
 import at.fhv.jazzers.backend.application.api.ProductService;
 import at.fhv.jazzers.backend.domain.model.product.Medium;
 import at.fhv.jazzers.backend.domain.repository.ProductRepository;
@@ -10,7 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductServiceImpl implements ProductService {
-    private final ProductRepository productRepository = ServiceRegistry.productRepository();
+    private final ProductRepository productRepository;
+
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @Override
     public List<ProductOverviewDTO> searchAnalog(String titleOrInterpret) {
@@ -29,10 +32,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private List<ProductOverviewDTO> search(String titleOrInterpret) {
-        if (titleOrInterpret.length() < 2) {
-            throw new IllegalArgumentException("The search string is too short.");
-        }
-
         return productRepository
                 .search(titleOrInterpret)
                 .stream()

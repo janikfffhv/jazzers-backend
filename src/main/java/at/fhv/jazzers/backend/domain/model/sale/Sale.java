@@ -1,7 +1,6 @@
 package at.fhv.jazzers.backend.domain.model.sale;
 
 import at.fhv.jazzers.backend.domain.model.customer.Customer;
-import at.fhv.jazzers.backend.domain.model.employee.Employee;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,11 +18,8 @@ public class Sale {
     @Enumerated(EnumType.STRING)
     private SaleType saleType;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Line> lines;
-
-    @ManyToOne
-    private Employee employee;
 
     @ManyToOne()
     private Customer customer;
@@ -35,12 +31,19 @@ public class Sale {
 
     }
 
-    public Sale(SaleId saleId, SaleType saleType, List<Line> lines, Employee employee, Customer customer) {
+    private Sale(SaleId saleId, SaleType saleType, List<Line> lines, Customer customer) {
         this.saleId = saleId;
         this.saleType = saleType;
         this.lines = lines;
-        this.employee = employee;
         this.customer = customer;
+    }
+
+    public static Sale create(SaleId saleId, SaleType saleType, List<Line> lines, Customer customer) {
+        if (lines.size() <= 0) {
+            throw new IllegalArgumentException("The sale must have at least one line.");
+        }
+
+        return new Sale(saleId, saleType, lines, customer);
     }
 
 
@@ -63,11 +66,17 @@ public class Sale {
         return List.copyOf(lines);
     }
 
-    public Employee employee() {
-        return employee;
-    }
-
     public Customer customer() {
         return customer;
+    }
+
+    public double saleTotal() {
+        double saleTotal = 0;
+
+        for (Line line : lines) {
+            saleTotal += line.lineTotal();
+        }
+
+        return saleTotal;
     }
 }
