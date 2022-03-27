@@ -55,7 +55,7 @@ public class ServiceRegistry {
 
     public static RMI_ProductService rmi_productService() throws RemoteException {
         if (rmi_productService == null) {
-            rmi_productService = new RMI_ProductServiceImpl();
+            rmi_productService = new RMI_ProductServiceImpl(productService());
         }
         return rmi_productService;
     }
