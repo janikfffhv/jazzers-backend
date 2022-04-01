@@ -7,23 +7,38 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    // Shared Library
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.postgresql/postgresql - Postgres
+    // Postgres
     implementation 'org.postgresql:postgresql:42.3.3'
-    // https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api - JPA
+    // JPA
     implementation 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final'
-    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core - Hibernate
+    // Hibernate
     implementation 'org.hibernate:hibernate-core:5.6.7.Final'
     // Shared Library
     implementation 'com.github.Rhokkar:jazzers-shared:main-SNAPSHOT'
 
-    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    // H2
+    testImplementation 'com.h2database:h2:2.1.210'
+    // Mockito
     testImplementation 'org.mockito:mockito-core:4.4.0'
+    // JUnit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes 'Main-Class': 'at.fhv.jazzers.backend.Server'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 configurations.all {

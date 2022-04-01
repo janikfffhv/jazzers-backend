@@ -8,6 +8,8 @@ import at.fhv.jazzers.backend.domain.model.product.Medium;
 import at.fhv.jazzers.backend.domain.model.product.Product;
 import at.fhv.jazzers.backend.domain.model.product.ProductId;
 import at.fhv.jazzers.backend.domain.repository.ProductRepository;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
@@ -17,8 +19,13 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HibernateProductRepositoryTests {
-    private final EntityManager entityManager = ServiceRegistry.entityManager();
+    private EntityManager entityManager;
     private final ProductRepository productRepository = ServiceRegistry.productRepository();
+
+    @BeforeEach
+    void setUp() {
+        this.entityManager = ServiceRegistry.entityManager();
+    }
 
     @Test
     public void given_products_when_empty_query_then_all_products() {

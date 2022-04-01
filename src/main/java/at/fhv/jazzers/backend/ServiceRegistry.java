@@ -18,6 +18,8 @@ import at.fhv.jazzers.shared.api.RMI_SaleService;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServiceRegistry {
     private static EntityManager entityManager;
@@ -34,7 +36,11 @@ public class ServiceRegistry {
 
     public static EntityManager entityManager() {
         if (entityManager == null) {
-            entityManager = Persistence.createEntityManagerFactory("Test").createEntityManager();
+            Map<String, Object> configOverrides = new HashMap<>();
+            configOverrides.put("javax.persistence.jdbc.user", System.getenv("POSTGRES_USER"));
+            configOverrides.put("javax.persistence.jdbc.password", System.getenv("POSTGRES_PASSWORD"));
+
+            entityManager = Persistence.createEntityManagerFactory("JazzersBackend", configOverrides).createEntityManager();
         }
         return entityManager;
     }

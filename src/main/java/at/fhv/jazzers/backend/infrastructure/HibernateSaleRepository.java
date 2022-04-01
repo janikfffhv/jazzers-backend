@@ -7,7 +7,11 @@ import at.fhv.jazzers.backend.domain.repository.SaleRepository;
 import javax.persistence.EntityManager;
 
 public class HibernateSaleRepository implements SaleRepository {
-    private final EntityManager entityManager = ServiceRegistry.entityManager();
+    private final EntityManager entityManager;
+
+    public HibernateSaleRepository() {
+        this.entityManager = ServiceRegistry.entityManager();
+    }
 
     @Override
     public void save(Sale sale) {

@@ -9,7 +9,11 @@ import javax.persistence.EntityManager;
 import java.util.Optional;
 
 public class HibernateCustomerRepository implements CustomerRepository {
-    private final EntityManager entityManager = ServiceRegistry.entityManager();
+    private final EntityManager entityManager;
+
+    public HibernateCustomerRepository() {
+        this.entityManager = ServiceRegistry.entityManager();
+    }
 
     @Override
     public Optional<Customer> byId(CustomerId customerId) {

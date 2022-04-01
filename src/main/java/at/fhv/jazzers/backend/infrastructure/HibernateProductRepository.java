@@ -10,7 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class HibernateProductRepository implements ProductRepository {
-    private final EntityManager entityManager = ServiceRegistry.entityManager();
+    private final EntityManager entityManager;
+
+    public HibernateProductRepository() {
+        this.entityManager = ServiceRegistry.entityManager();
+    }
 
     @Override
     public Optional<Product> byId(ProductId productId) {

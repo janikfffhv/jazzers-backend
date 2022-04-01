@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres-server
+    image: postgres:latest
+    restart: always
+    volumes:
+      - postgres_data:/var/postgres_data
+    environment:
+      - PGDATA=/var/postgres_data
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=jazzersdb
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    env_file:
+      - .env
+  backend:
+    container_name: application-server
+    build: .
+    ports:
+      - ${RMI_PORT}:${RMI_PORT}
+    links:
+      - postgres
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:

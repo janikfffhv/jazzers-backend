@@ -3,37 +3,30 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
   http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
-    <persistence-unit name="Test">
+    <persistence-unit name="JazzersBackend">
         <description>Hibernate EntityManager</description>
 
         <class>at.fhv.jazzers.backend.domain.model.customer.Customer</class>
         <class>at.fhv.jazzers.backend.domain.model.customer.Playlist</class>
-
         <class>at.fhv.jazzers.backend.domain.model.employee.Employee</class>
-
         <class>at.fhv.jazzers.backend.domain.model.interpret.Interpret</class>
-
         <class>at.fhv.jazzers.backend.domain.model.product.Label</class>
         <class>at.fhv.jazzers.backend.domain.model.product.Product</class>
         <class>at.fhv.jazzers.backend.domain.model.product.Supplier</class>
-
         <class>at.fhv.jazzers.backend.domain.model.sale.Line</class>
         <class>at.fhv.jazzers.backend.domain.model.sale.Sale</class>
-
         <class>at.fhv.jazzers.backend.domain.model.work.Work</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
-
-            <!-- <property name="hibernate.hbm2ddl.auto" value="create"/> -->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-
+            <!-- "create-drop" deletes the database on every start -->
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
-            <property name="javax.persistence.jdbc.user" value="postgres"/>
-            <property name="javax.persistence.jdbc.password" value="bZ+XdvLx45M="/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://postgres-server:5432/jazzersdb"/>
+            <property name="javax.persistence.jdbc.user" value="*"/>
+            <property name="javax.persistence.jdbc.password" value="*"/>
         </properties>
     </persistence-unit>
 </persistence>
