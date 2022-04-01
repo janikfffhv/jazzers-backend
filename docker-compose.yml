@@ -20,7 +20,7 @@ services:
     container_name: application-server
     build: .
     ports:
-      - ${RMI_PORT}:${RMI_PORT}
+      - ${RMI_APPLICATION_PORT}:${RMI_APPLICATION_PORT}
     links:
       - postgres
     env_file:
