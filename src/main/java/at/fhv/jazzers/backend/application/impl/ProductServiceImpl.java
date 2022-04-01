@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductOverviewDTO> searchAnalog(String titleOrInterpret) {
         return search(titleOrInterpret)
                 .stream()
-                .filter(product -> !product.medium().equals(Medium.MP3.getName()))
+                .filter(product -> !product.getMedium().equals(Medium.MP3.getName()))
                 .collect(Collectors.toList());
     }
 
@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductOverviewDTO> searchDigital(String titleOrInterpret) {
         return search(titleOrInterpret)
                 .stream()
-                .filter(product -> product.medium().equals(Medium.MP3.getName()))
+                .filter(product -> product.getMedium().equals(Medium.MP3.getName()))
                 .collect(Collectors.toList());
     }
 

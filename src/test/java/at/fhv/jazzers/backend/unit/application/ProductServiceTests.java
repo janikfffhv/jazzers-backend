@@ -49,7 +49,7 @@ public class ProductServiceTests {
 
         List<ProductOverviewDTO> analogProductsDTO = productsDTO
                 .stream()
-                .filter(product -> !product.medium().equals(Medium.MP3.getName()))
+                .filter(product -> !product.getMedium().equals(Medium.MP3.getName()))
                 .collect(Collectors.toList());
 
         // Mocking
@@ -83,7 +83,7 @@ public class ProductServiceTests {
 
         List<ProductOverviewDTO> digitalProductsDTO = productsDTO
                 .stream()
-                .filter(product -> product.medium().equals(Medium.MP3.getName()))
+                .filter(product -> product.getMedium().equals(Medium.MP3.getName()))
                 .collect(Collectors.toList());
 
         // Mocking

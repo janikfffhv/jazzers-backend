@@ -38,7 +38,7 @@ public class SaleServiceImpl implements SaleService {
 
         List<Line> lines = linesDTO
                 .stream()
-                .map(lineDTO -> new Line(lineDTO.amount(), productRepository.byId(new ProductId(lineDTO.productId())).orElseThrow()))
+                .map(lineDTO -> new Line(lineDTO.getAmount(), productRepository.byId(new ProductId(lineDTO.getProductId())).orElseThrow()))
                 .collect(Collectors.toList());
 
         Sale sale = Sale.create(new SaleId(UUID.randomUUID()), SaleType.PURCHASE, lines, customer.orElse(null));
@@ -57,7 +57,7 @@ public class SaleServiceImpl implements SaleService {
 
         List<Line> lines = linesDTO
                 .stream()
-                .map(lineDTO -> new Line(lineDTO.amount(), productRepository.byId(new ProductId(lineDTO.productId())).orElseThrow()))
+                .map(lineDTO -> new Line(lineDTO.getAmount(), productRepository.byId(new ProductId(lineDTO.getProductId())).orElseThrow()))
                 .collect(Collectors.toList());
 
         Sale sale = Sale.create(new SaleId(UUID.randomUUID()), SaleType.REFUND, lines, customer.orElse(null));
