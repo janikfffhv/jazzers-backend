@@ -12,7 +12,7 @@ public class RMI_ProductServiceImpl extends UnicastRemoteObject implements RMI_P
     private final ProductService productService;
 
     public RMI_ProductServiceImpl(ProductService productService) throws RemoteException {
-        super(Integer.parseInt(System.getenv("RMI_APPLICATION_PORT")));
+        super(Integer.parseInt(System.getenv("APPLICATION_RMI_PORT")));
         this.productService = productService;
     }
 
