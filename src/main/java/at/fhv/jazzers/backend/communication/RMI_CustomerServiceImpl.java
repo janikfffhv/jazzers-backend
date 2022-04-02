@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RMI_CustomerServiceImpl extends UnicastRemoteObject implements RMI_CustomerService {
     protected RMI_CustomerServiceImpl() throws RemoteException {
-        super(Integer.parseInt(System.getenv("APPLICATION_RMI_PORT")));
+        super(Integer.parseInt(System.getenv("JAZZERS_RMI_PORT")));
     }
 
     @Override

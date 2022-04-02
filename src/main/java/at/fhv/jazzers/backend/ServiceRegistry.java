@@ -37,8 +37,8 @@ public class ServiceRegistry {
     public static EntityManager entityManager() {
         if (entityManager == null) {
             Map<String, Object> configOverrides = new HashMap<>();
-            configOverrides.put("javax.persistence.jdbc.user", System.getenv("APPLICATION_POSTGRES_USER"));
-            configOverrides.put("javax.persistence.jdbc.password", System.getenv("APPLICATION_POSTGRES_PASSWORD"));
+            configOverrides.put("javax.persistence.jdbc.user", System.getenv("JAZZERS_POSTGRES_USER"));
+            configOverrides.put("javax.persistence.jdbc.password", System.getenv("JAZZERS_POSTGRES_PASSWORD"));
 
             entityManager = Persistence.createEntityManagerFactory("JazzersBackend", configOverrides).createEntityManager();
         }

@@ -2,25 +2,25 @@ version: "3.9"
 
 services:
   postgres:
-    container_name: postgres-server
+    container_name: jazzers-postgres
     image: postgres:latest
     restart: always
     volumes:
       - postgres_data:/var/postgres_data
     environment:
       - PGDATA=/var/postgres_data
-      - POSTGRES_USER=${APPLICATION_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${APPLICATION_POSTGRES_PASSWORD}
+      - POSTGRES_USER=${JAZZERS_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${JAZZERS_POSTGRES_PASSWORD}
       - POSTGRES_DB=jazzersdb
     ports:
-      - ${APPLICATION_POSTGRES_PORT}:${APPLICATION_POSTGRES_PORT}
+      - ${JAZZERS_POSTGRES_PORT}:${JAZZERS_POSTGRES_PORT}
     env_file:
       - .env
   backend:
-    container_name: application-server
+    container_name: jazzers-server
     build: .
     ports:
-      - ${APPLICATION_RMI_PORT}:${APPLICATION_RMI_PORT}
+      - ${JAZZERS_RMI_PORT}:${JAZZERS_RMI_PORT}
     links:
       - postgres
     env_file:

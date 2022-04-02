@@ -14,7 +14,7 @@ public class RMI_SaleServiceImpl extends UnicastRemoteObject implements RMI_Sale
     private final SaleService saleService;
 
     public RMI_SaleServiceImpl(SaleService saleService) throws RemoteException {
-        super(Integer.parseInt(System.getenv("APPLICATION_RMI_PORT")));
+        super(Integer.parseInt(System.getenv("JAZZERS_RMI_PORT")));
         this.saleService = saleService;
     }
 

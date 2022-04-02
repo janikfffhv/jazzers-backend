@@ -24,7 +24,7 @@
             <!-- "create-drop" deletes the database on every start -->
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://postgres-server:5432/jazzersdb"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://jazzers-postgres:5432/jazzersdb"/>
             <property name="javax.persistence.jdbc.user" value="*"/>
             <property name="javax.persistence.jdbc.password" value="*"/>
         </properties>
