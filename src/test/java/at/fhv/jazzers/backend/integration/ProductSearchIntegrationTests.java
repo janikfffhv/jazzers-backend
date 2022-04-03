@@ -69,7 +69,7 @@ public class ProductSearchIntegrationTests {
     }
 
     @Test
-    public void when_searching_digital_then_digital_products() throws RemoteException {
+    public void when_searching_digital_then_digital_products() {
         // Prepare Data
         Interpret interpret1 = new Interpret(new InterpretId(UUID.randomUUID()), "Interpret1");
         Interpret interpret2 = new Interpret(new InterpretId(UUID.randomUUID()), "Interpret2");
@@ -88,9 +88,9 @@ public class ProductSearchIntegrationTests {
                         product.price()))
                 .collect(Collectors.toList());
 
-        List<ProductOverviewDTO> analogProductsDTO = productsDTO
+        List<ProductOverviewDTO> digitalProductsDTO = productsDTO
                 .stream()
-                .filter(product -> !product.getMedium().equals(Medium.MP3.getName()))
+                .filter(product -> product.getMedium().equals(Medium.MP3.getName()))
                 .collect(Collectors.toList());
 
         // Execute Use Case
@@ -103,6 +103,6 @@ public class ProductSearchIntegrationTests {
         transaction.rollback();
 
         // Assertion / Verification
-        assertEquals(analogProductsDTO, actual);
+        assertEquals(digitalProductsDTO, actual);
     }
 }
