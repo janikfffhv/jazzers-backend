@@ -9,11 +9,13 @@ import java.rmi.registry.LocateRegistry;
 
 public class RMI_Server {
     public static void start() throws RemoteException, MalformedURLException {
-        // Create Registry
-        LocateRegistry.createRegistry(Integer.parseInt(System.getenv("JAZZERS_RMI_PORT")));
-
         // Remote Objects try to listen to docker ip, but they need to listen to localhost (local .env) or application-server-ip (azure .env)
         System.setProperty("java.rmi.server.hostname", System.getenv("JAZZERS_RMI_HOST"));
+        System.setProperty("com.sun.management.jmxremote.port", System.getenv("JAZZERS_RMI_PORT"));
+        System.setProperty("com.sun.management.jmxremote.rmi.port", System.getenv("JAZZERS_RMI_PORT"));
+
+        // Create Registry
+        LocateRegistry.createRegistry(Integer.parseInt(System.getenv("JAZZERS_RMI_PORT")));
 
         // Bind Services
         Naming.rebind("rmi://localhost/productService", ServiceRegistry.rmi_productService());

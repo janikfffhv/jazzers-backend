@@ -16,6 +16,9 @@ services:
       - ${JAZZERS_POSTGRES_PORT}:${JAZZERS_POSTGRES_PORT}
     env_file:
       - .env
+    command: -p ${JAZZERS_POSTGRES_PORT}
+    expose:
+      - ${JAZZERS_POSTGRES_PORT}
   jazzersserver:
     container_name: jazzers-server
     build: .
@@ -25,6 +28,8 @@ services:
       - jazzerspostgres
     env_file:
       - .env
-
+    command: -p ${JAZZERS_RMI_PORT}
+    expose:
+      - ${JAZZERS_RMI_PORT}
 volumes:
   jazzers_data:
