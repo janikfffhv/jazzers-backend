@@ -2,12 +2,11 @@ package at.fhv.jazzers.backend.domain.model.employee;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.UUID;
 
 @Embeddable
 public class EmployeeId {
     // Properties
-    private UUID id;
+    private String id;
 
 
 
@@ -16,14 +15,14 @@ public class EmployeeId {
 
     }
 
-    public EmployeeId(UUID id) {
+    public EmployeeId(String id) {
         this.id = id;
     }
 
 
 
     // Getters
-    public UUID id() {
+    public String id() {
         return id;
     }
 

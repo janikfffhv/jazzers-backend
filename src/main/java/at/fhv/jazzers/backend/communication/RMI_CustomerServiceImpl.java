@@ -18,3 +18,8 @@ public class RMI_CustomerServiceImpl extends UnicastRemoteObject implements RMI_
         return null;
     }
 }
+
+
+//             // TEST FOR:     LOCAL-Docker  <--RMI-->  LOCAL-Docker
+//            RMI_CustomerService customerService = (RMI_CustomerService) Naming.lookup("rmi://10.0.40.164:1100/customerService");
+//            customerService.search("max").forEach(customer -> System.out.println("Customer: " + customer.getFirstName()));

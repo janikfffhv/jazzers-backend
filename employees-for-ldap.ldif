@@ -5,11 +5,90 @@ objectClass: organizationalUnit
 objectClass: top
 ou: employees
 
+dn: cn=aar9086,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: aar9086
+sn: Arslan
+userPassword:: cGFzc3dvcmQ=
+
+dn: cn=ace9467,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: ace9467
+sn: Celes
+userPassword:: cGFzc3dvcmQ=
+
+dn: cn=bte3268,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: bte3268
+sn: Teker
+userPassword:: cGFzc3dvcmQ=
+
 dn: cn=cpe2877,ou=employees,dc=ad,dc=teamC,dc=net
 objectClass: organizationalPerson
 objectClass: person
 objectClass: top
 cn: cpe2877
 sn: Perc
-userPassword:: e1NTSEF9TUdCVU5la2ZMbmQzNDBuNmlCOTJSL3d2MERuREhWdWFKbmZGM3c9P
- Q==
+userPassword:: cGFzc3dvcmQ=
+
+dn: cn=eha7244,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: eha7244
+sn: Hartmann
+userPassword:: cGFzc3dvcmQ=
+
+dn: cn=jfu5402,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: jfu5402
+sn: Fuchsberger
+userPassword:: cGFzc3dvcmQ=
+
+dn: cn=ppl8596,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: ppl8596
+sn: Pleterski
+userPassword:: cGFzc3dvcmQ=
+
+dn: cn=tf-test,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: tf-test
+sn: Test
+userPassword:: VGVzdC10Zg==
+
+dn: cn=tf-test,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: roles-standard
+sn: Standard
+userPassword:: VGVzdC10Zg==
+
+dn: cn=tf-test,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: roles-operator
+sn: Operator
+userPassword:: VGVzdC10Zg==
+
+dn: cn=tf-test,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: roles-standard-and-operator
+sn: StandardAndOperator
+userPassword:: VGVzdC10Zg==

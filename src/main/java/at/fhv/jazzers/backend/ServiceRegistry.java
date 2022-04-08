@@ -12,11 +12,15 @@ import at.fhv.jazzers.backend.domain.repository.SaleRepository;
 import at.fhv.jazzers.backend.infrastructure.HibernateCustomerRepository;
 import at.fhv.jazzers.backend.infrastructure.HibernateProductRepository;
 import at.fhv.jazzers.backend.infrastructure.HibernateSaleRepository;
+import at.fhv.jazzers.shared.api.RMI_CustomerService;
 import at.fhv.jazzers.shared.api.RMI_ProductService;
 import at.fhv.jazzers.shared.api.RMI_SaleService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +33,7 @@ public class ServiceRegistry {
 
     private static RMI_ProductService rmi_productService;
     private static RMI_SaleService rmi_saleService;
+    private static RMI_CustomerService rmi_customerService;
 
     private static CustomerRepository customerRepository;
     private static ProductRepository productRepository;
@@ -57,6 +62,13 @@ public class ServiceRegistry {
             saleService = new SaleServiceImpl(entityManager(), customerRepository(), productRepository(), saleRepository());
         }
         return saleService;
+    }
+
+    public static RMI_CustomerService rmi_customerService() throws MalformedURLException, NotBoundException, RemoteException {
+        if (rmi_customerService == null) {
+            rmi_customerService = (RMI_CustomerService) Naming.lookup("rmi://" + System.getenv("CUSTOMER_RMI_HOST") + ":" + System.getenv("CUSTOMER_RMI_PORT") + "/customerService");
+        }
+        return rmi_customerService;
     }
 
     public static RMI_ProductService rmi_productService() throws RemoteException {

@@ -5,6 +5,8 @@ import at.fhv.jazzers.backend.domain.model.customer.Customer;
 import at.fhv.jazzers.backend.domain.model.customer.CustomerId;
 import at.fhv.jazzers.backend.domain.model.customer.Playlist;
 import at.fhv.jazzers.backend.domain.model.employee.Employee;
+import at.fhv.jazzers.backend.domain.model.employee.EmployeeId;
+import at.fhv.jazzers.backend.domain.model.employee.Role;
 import at.fhv.jazzers.backend.domain.model.interpret.Interpret;
 import at.fhv.jazzers.backend.domain.model.interpret.InterpretId;
 import at.fhv.jazzers.backend.domain.model.product.*;
@@ -38,6 +40,19 @@ public class DataGenerator {
     }
 
     private static void generateData() {
+        Employee employee1 = new Employee(new EmployeeId("aar9086"), List.of(Role.STANDARD, Role.OPERATOR));
+        Employee employee2 = new Employee(new EmployeeId("ace9467"), List.of(Role.STANDARD, Role.OPERATOR));
+        Employee employee3 = new Employee(new EmployeeId("bte3268"), List.of(Role.STANDARD, Role.OPERATOR));
+        Employee employee4 = new Employee(new EmployeeId("cpe2877"), List.of(Role.STANDARD, Role.OPERATOR));
+        Employee employee5 = new Employee(new EmployeeId("eha7244"), List.of(Role.STANDARD, Role.OPERATOR));
+        Employee employee6 = new Employee(new EmployeeId("jfu5402"), List.of(Role.STANDARD, Role.OPERATOR));
+        Employee employee7 = new Employee(new EmployeeId("ppl8596"), List.of(Role.STANDARD, Role.OPERATOR));
+        Employee employee8 = new Employee(new EmployeeId("tf-test"), List.of(Role.STANDARD, Role.OPERATOR));
+        Employee employee9 = new Employee(new EmployeeId("roles-standard"), List.of(Role.STANDARD));
+        Employee employee10 = new Employee(new EmployeeId("roles-operator"), List.of(Role.OPERATOR));
+        Employee employee11 = new Employee(new EmployeeId("roles-standard-and-operator"), List.of(Role.STANDARD, Role.OPERATOR));
+        employees.addAll(List.of(employee1, employee2, employee3, employee4, employee5, employee6, employee7, employee8, employee9, employee10, employee11));
+
         Address address1 = new Address("Musterstraße", "1", "0000", "Muster");
 
         Customer customer1 = new Customer(new CustomerId(UUID.randomUUID()), "maxmustermann@gmail.com", "maxie55", "ichliebemaxine", "Max", "Mustermann", LocalDate.of(1999, 10, 11), "AT00 0000 0000 0000", address1, List.of(), List.of());
@@ -95,7 +110,6 @@ public class DataGenerator {
         EntityManager em = ServiceRegistry.entityManager();
         em.getTransaction().begin();
 
-        // ToDo: Maybe just persist Aggregate Roots?
         customers.forEach(em::persist);
         playlists.forEach(em::persist);
 
