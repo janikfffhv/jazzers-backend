@@ -39,6 +39,3 @@ services:
       - jazzerspostgres
     env_file:
       - .env
-    command: -p ${JAZZERS_RMI_PORT}
-    expose:
-      - ${JAZZERS_RMI_PORT}
