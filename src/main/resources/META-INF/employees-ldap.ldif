@@ -1,0 +1,15 @@
+version: 1
+
+dn: ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalUnit
+objectClass: top
+ou: employees
+
+dn: cn=cpe2877,ou=employees,dc=ad,dc=teamC,dc=net
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: cpe2877
+sn: Perc
+userPassword:: e1NTSEF9TUdCVU5la2ZMbmQzNDBuNmlCOTJSL3d2MERuREhWdWFKbmZGM3c9P
+ Q==

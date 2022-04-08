@@ -18,6 +18,24 @@ services:
     command: -p ${JAZZERS_POSTGRES_PORT}
     expose:
       - ${JAZZERS_POSTGRES_PORT}
+  jazzersldap:
+    container_name: jazzers-ldap
+    image: osixia/openldap:latest
+    restart: unless-stopped
+    ports:
+      - '10389:10389'
+      - '10636:10636'
+    command: [ "--copy-service" ]
+    environment:
+      LDAP_ADMIN_PASSWORD: "admin"
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+      LDAP_BASE_DN: "dc=ad,dc=teamC,dc=net"
+      LDAP_ORGANISATION: "Jazzers"
+      LDAP_DOMAIN: "ad.teamC.net"
+      LDAP_TLS: "false"
+      LDAP_PORT: "10389"
+    volumes:
+      - ./src/main/resources/META-INF/employees-ldap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/bootstrap-data.ldif
   jazzersserver:
     container_name: jazzers-server
     build: .
