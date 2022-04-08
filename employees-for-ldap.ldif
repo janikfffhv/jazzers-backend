@@ -69,26 +69,26 @@ cn: tf-test
 sn: Test
 userPassword:: VGVzdC10Zg==
 
-dn: cn=tf-test,ou=employees,dc=ad,dc=teamC,dc=net
+dn: cn=roles-standard,ou=employees,dc=ad,dc=teamC,dc=net
 objectClass: organizationalPerson
 objectClass: person
 objectClass: top
 cn: roles-standard
 sn: Standard
-userPassword:: VGVzdC10Zg==
+userPassword:: cGFzc3dvcmQ=
 
-dn: cn=tf-test,ou=employees,dc=ad,dc=teamC,dc=net
+dn: cn=roles-operator,ou=employees,dc=ad,dc=teamC,dc=net
 objectClass: organizationalPerson
 objectClass: person
 objectClass: top
 cn: roles-operator
 sn: Operator
-userPassword:: VGVzdC10Zg==
+userPassword:: cGFzc3dvcmQ=
 
-dn: cn=tf-test,ou=employees,dc=ad,dc=teamC,dc=net
+dn: cn=roles-standard-and-operator,ou=employees,dc=ad,dc=teamC,dc=net
 objectClass: organizationalPerson
 objectClass: person
 objectClass: top
 cn: roles-standard-and-operator
 sn: StandardAndOperator
-userPassword:: VGVzdC10Zg==
+userPassword:: cGFzc3dvcmQ=
