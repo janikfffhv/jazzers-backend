@@ -4,10 +4,7 @@ services:
     container_name: jazzers-postgres
     image: postgres:latest
     restart: always
-    volumes:
-      - jazzers_data:/var/jazzers_data
     environment:
-      - PGDATA=/var/jazzers_data
       - POSTGRES_USER=${JAZZERS_POSTGRES_USER}
       - POSTGRES_PASSWORD=${JAZZERS_POSTGRES_PASSWORD}
       - POSTGRES_DB=jazzersdb
@@ -15,9 +12,6 @@ services:
       - ${JAZZERS_POSTGRES_PORT}:${JAZZERS_POSTGRES_PORT}
     env_file:
       - .env
-    command: -p ${JAZZERS_POSTGRES_PORT}
-    expose:
-      - ${JAZZERS_POSTGRES_PORT}
   jazzersldap:
     container_name: jazzers-ldap
     image: osixia/openldap:latest
@@ -48,7 +42,3 @@ services:
     command: -p ${JAZZERS_RMI_PORT}
     expose:
       - ${JAZZERS_RMI_PORT}
-volumes:
-  jazzers_data:
-
-
