@@ -35,7 +35,7 @@ services:
       LDAP_TLS: "false"
       LDAP_PORT: "10389"
     volumes:
-      - ./src/main/resources/META-INF/employees-ldap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/bootstrap-data.ldif
+      - ./src/main/resources/employees-ldap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/bootstrap-data.ldif
   jazzersserver:
     container_name: jazzers-server
     build: .
