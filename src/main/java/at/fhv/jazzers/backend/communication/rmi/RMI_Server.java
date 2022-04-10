@@ -4,7 +4,6 @@ import at.fhv.jazzers.backend.ServiceRegistry;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 

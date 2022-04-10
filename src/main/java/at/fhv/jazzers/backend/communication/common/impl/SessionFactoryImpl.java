@@ -8,7 +8,7 @@ import at.fhv.jazzers.backend.domain.model.employee.EmployeeId;
 import at.fhv.jazzers.backend.domain.repository.EmployeeRepository;
 
 import javax.naming.Context;
-import javax.naming.InitialContext;
+import javax.naming.directory.InitialDirContext;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -40,13 +40,13 @@ public class SessionFactoryImpl implements SessionFactory {
 
         Hashtable<String, String> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, "ldap://localhost:10389");
+        env.put(Context.PROVIDER_URL, "ldap://10.0.40.165:10389");
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
         env.put(Context.SECURITY_PRINCIPAL, "cn=" + username + ",ou=employees,dc=ad,dc=teamC,dc=net");
         env.put(Context.SECURITY_CREDENTIALS, password);
 
         try {
-            new InitialContext(env).close();
+            new InitialDirContext(env).close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

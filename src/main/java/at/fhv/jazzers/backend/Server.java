@@ -9,14 +9,6 @@ public class Server {
             DataGenerator.main(args);
 
             RMI_Server.start();
-
-            // RMI_SessionFactory sessionFactory = new RMI_SessionFactory();
-            // boolean answer = sessionFactory.authenticate("cpe2877", "password");
-
-            // Session sessionFactory = new Session();
-            // boolean answer = sessionFactory.credentialsValid("cpe2877", "PssWrd");
-            // System.out.println("Answer: " + answer);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
