@@ -1,7 +1,6 @@
 package at.fhv.jazzers.backend;
 
-import at.fhv.jazzers.backend.communication.RMI_Server;
-import at.fhv.jazzers.shared.api.RMI_CustomerService;
+import at.fhv.jazzers.backend.communication.rmi.RMI_Server;
 
 public class Server {
     public static void main(String[] args) {
@@ -10,6 +9,14 @@ public class Server {
             DataGenerator.main(args);
 
             RMI_Server.start();
+
+            // RMI_SessionFactory sessionFactory = new RMI_SessionFactory();
+            // boolean answer = sessionFactory.authenticate("cpe2877", "password");
+
+            // Session sessionFactory = new Session();
+            // boolean answer = sessionFactory.credentialsValid("cpe2877", "PssWrd");
+            // System.out.println("Answer: " + answer);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

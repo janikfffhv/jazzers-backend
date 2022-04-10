@@ -6,7 +6,7 @@ import java.util.Objects;
 @Embeddable
 public class EmployeeId {
     // Properties
-    private String id;
+    private String username;
 
 
 
@@ -16,14 +16,14 @@ public class EmployeeId {
     }
 
     public EmployeeId(String id) {
-        this.id = id;
+        this.username = id;
     }
 
 
 
     // Getters
-    public String id() {
-        return id;
+    public String username() {
+        return username;
     }
 
 
@@ -34,11 +34,11 @@ public class EmployeeId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmployeeId that = (EmployeeId) o;
-        return id.equals(that.id);
+        return username.equals(that.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(username);
     }
 }

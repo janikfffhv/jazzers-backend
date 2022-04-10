@@ -15,16 +15,16 @@ public class Employee {
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
-    private List<Role> role;
+    private List<Role> roles;
 
     // Constructors
     protected Employee() {
 
     }
 
-    public Employee(EmployeeId employeeId, List<Role> role) {
+    public Employee(EmployeeId employeeId, List<Role> roles) {
         this.employeeId = employeeId;
-        this.role = role;
+        this.roles = roles;
     }
 
 
@@ -39,7 +39,7 @@ public class Employee {
         return employeeId;
     }
 
-    public List<Role> role() {
-        return List.copyOf(role);
+    public List<Role> roles() {
+        return List.copyOf(roles);
     }
 }
