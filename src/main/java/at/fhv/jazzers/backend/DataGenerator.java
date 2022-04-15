@@ -1,6 +1,5 @@
 package at.fhv.jazzers.backend;
 
-import at.fhv.jazzers.backend.domain.model.customer.Address;
 import at.fhv.jazzers.backend.domain.model.customer.Customer;
 import at.fhv.jazzers.backend.domain.model.customer.CustomerId;
 import at.fhv.jazzers.backend.domain.model.customer.Playlist;
@@ -53,10 +52,11 @@ public class DataGenerator {
         Employee employee11 = new Employee(new EmployeeId("roles-standard-and-operator"), List.of(Role.STANDARD, Role.OPERATOR));
         employees.addAll(List.of(employee1, employee2, employee3, employee4, employee5, employee6, employee7, employee8, employee9, employee10, employee11));
 
-        Address address1 = new Address("Musterstraße", "1", "0000", "Muster");
-
-        Customer customer1 = new Customer(new CustomerId(UUID.randomUUID()), "maxmustermann@gmail.com", "maxie55", "ichliebemaxine", "Max", "Mustermann", LocalDate.of(1999, 10, 11), "AT00 0000 0000 0000", address1, List.of(), List.of());
-        customers.add(customer1);
+        Customer customer1 = new Customer(new CustomerId(UUID.randomUUID()), List.of(), List.of());
+        Customer customer2 = new Customer(new CustomerId(UUID.randomUUID()), List.of(), List.of());
+        Customer customer3 = new Customer(new CustomerId(UUID.randomUUID()), List.of(), List.of());
+        Customer customer4 = new Customer(new CustomerId(UUID.randomUUID()), List.of(), List.of());
+        customers.addAll(List.of(customer1, customer2, customer3, customer4));
 
         Supplier supplier1 = new Supplier("Supplier 1");
         Supplier supplier2 = new Supplier("Supplier 2");

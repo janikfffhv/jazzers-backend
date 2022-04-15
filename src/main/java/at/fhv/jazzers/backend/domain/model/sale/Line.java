@@ -1,6 +1,5 @@
 package at.fhv.jazzers.backend.domain.model.sale;
 
-import at.fhv.jazzers.backend.domain.model.product.Medium;
 import at.fhv.jazzers.backend.domain.model.product.Product;
 
 import javax.persistence.*;

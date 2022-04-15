@@ -1,7 +1,6 @@
 package at.fhv.jazzers.backend.infrastructure;
 
 import at.fhv.jazzers.backend.ServiceRegistry;
-import at.fhv.jazzers.backend.domain.model.customer.Customer;
 import at.fhv.jazzers.backend.domain.model.employee.Employee;
 import at.fhv.jazzers.backend.domain.model.employee.EmployeeId;
 import at.fhv.jazzers.backend.domain.repository.EmployeeRepository;

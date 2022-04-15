@@ -12,6 +12,9 @@ services:
       - ${JAZZERS_POSTGRES_PORT}:${JAZZERS_POSTGRES_PORT}
     env_file:
       - .env
+    command: -p ${JAZZERS_POSTGRES_PORT}
+    expose:
+      - ${JAZZERS_POSTGRES_PORT}
   jazzersldap:
     container_name: jazzers-ldap
     image: osixia/openldap:latest

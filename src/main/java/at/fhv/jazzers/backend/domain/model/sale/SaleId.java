@@ -1,5 +1,7 @@
 package at.fhv.jazzers.backend.domain.model.sale;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
@@ -7,6 +9,7 @@ import java.util.UUID;
 @Embeddable
 public class SaleId {
     // Properties
+    @Type(type = "uuid-char")
     private UUID id;
 
 

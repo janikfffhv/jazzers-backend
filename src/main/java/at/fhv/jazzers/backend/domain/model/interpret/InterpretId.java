@@ -1,5 +1,7 @@
 package at.fhv.jazzers.backend.domain.model.interpret;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Embeddable;
 import java.util.Objects;
 import java.util.UUID;
@@ -7,6 +9,7 @@ import java.util.UUID;
 @Embeddable
 public class InterpretId {
     // Properties
+    @Type(type = "uuid-char")
     private UUID id;
 
 

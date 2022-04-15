@@ -21,7 +21,7 @@ public class Sale {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Line> lines;
 
-    @ManyToOne()
+    @ManyToOne
     private Customer customer;
 
 

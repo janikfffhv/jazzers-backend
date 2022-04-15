@@ -1,10 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
-  http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
-             version="2.1">
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
     <persistence-unit name="JazzersBackend">
         <description>Hibernate EntityManager</description>
+
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>at.fhv.jazzers.backend.domain.model.customer.Customer</class>
         <class>at.fhv.jazzers.backend.domain.model.customer.Playlist</class>
@@ -17,16 +19,15 @@
         <class>at.fhv.jazzers.backend.domain.model.sale.Sale</class>
         <class>at.fhv.jazzers.backend.domain.model.work.Work</class>
 
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
-
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
-            <!-- "create-drop" deletes the database on every start -->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://jazzers-postgres:5432/jazzersdb"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://jazzers-postgres:5434/jazzersdb"/>
             <property name="javax.persistence.jdbc.user" value="*"/>
             <property name="javax.persistence.jdbc.password" value="*"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="show_sql" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>
