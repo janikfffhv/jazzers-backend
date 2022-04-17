@@ -1,5 +1,14 @@
 version: "3.9"
 services:
+  jazzersactivemq:
+    container_name: jazzers-activemq
+    image: rmohr/activemq:latest
+    restart: always
+    ports:
+      # jakarta messaging
+      - "61616:61616"
+      # web console
+      - "8161:8161"
   jazzerspostgres:
     container_name: jazzers-postgres
     image: postgres:latest

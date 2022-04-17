@@ -1,17 +1,16 @@
 package at.fhv.jazzers.backend.communication.rmi;
 
 import at.fhv.jazzers.backend.communication.common.api.Session;
-import at.fhv.jazzers.shared.api.RMI_CustomerService;
-import at.fhv.jazzers.shared.api.RMI_ProductService;
-import at.fhv.jazzers.shared.api.RMI_SaleService;
-import at.fhv.jazzers.shared.api.RMI_Session;
+import at.fhv.jazzers.shared.api.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class RMI_SessionImpl extends UnicastRemoteObject implements RMI_Session {
-    private String username;
+    private final String username;
     private RMI_CustomerService rmi_customerService;
+    private RMI_MessageConsumerService rmi_messageConsumerService;
+    private RMI_MessagePublisherService rmi_messagePublisherService;
     private RMI_ProductService rmi_productService;
     private RMI_SaleService rmi_saleService;
 
@@ -22,6 +21,14 @@ public class RMI_SessionImpl extends UnicastRemoteObject implements RMI_Session 
 
         try {
             rmi_customerService = session.rmi_customerService();
+        } catch (Exception ignored) { }
+
+        try {
+            rmi_messageConsumerService = new RMI_MessageConsumerServiceImpl(session.messageConsumerService());
+        } catch (Exception ignored) { }
+
+        try {
+            rmi_messagePublisherService = new RMI_MessagePublisherServiceImpl(session.messagePublisherService());
         } catch (Exception ignored) { }
 
         try {
@@ -44,6 +51,22 @@ public class RMI_SessionImpl extends UnicastRemoteObject implements RMI_Session 
             throw new IllegalArgumentException("Insufficient permissions.");
         }
         return rmi_customerService;
+    }
+
+    @Override
+    public RMI_MessageConsumerService rmi_messageConsumerService() {
+        if (rmi_messageConsumerService == null) {
+            throw new IllegalArgumentException("Insufficient permissions.");
+        }
+        return rmi_messageConsumerService;
+    }
+
+    @Override
+    public RMI_MessagePublisherService rmi_messagePublisherService() {
+        if (rmi_messagePublisherService == null) {
+            throw new IllegalArgumentException("Insufficient permissions.");
+        }
+        return rmi_messagePublisherService;
     }
 
     @Override

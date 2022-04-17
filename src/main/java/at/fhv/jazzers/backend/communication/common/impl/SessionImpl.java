@@ -1,6 +1,8 @@
 package at.fhv.jazzers.backend.communication.common.impl;
 
 import at.fhv.jazzers.backend.ServiceRegistry;
+import at.fhv.jazzers.backend.application.api.MessageConsumerService;
+import at.fhv.jazzers.backend.application.api.MessagePublisherService;
 import at.fhv.jazzers.backend.application.api.ProductService;
 import at.fhv.jazzers.backend.application.api.SaleService;
 import at.fhv.jazzers.backend.communication.common.api.Session;
@@ -13,8 +15,10 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class SessionImpl implements Session {
-    private String username;
+    private final String username;
     private RMI_CustomerService rmi_customerService;
+    private MessageConsumerService messageConsumerService;
+    private MessagePublisherService messagePublisherService;
     private ProductService productService;
     private SaleService saleService;
 
@@ -23,12 +27,13 @@ public class SessionImpl implements Session {
 
         if (employee.roles().contains(Role.STANDARD)) {
             rmi_customerService = ServiceRegistry.rmi_customerService();
+            messageConsumerService = ServiceRegistry.messageConsumerService();
             productService = ServiceRegistry.productService();
             saleService = ServiceRegistry.saleService();
         }
 
         if (employee.roles().contains(Role.OPERATOR)) {
-            // operatorService
+            messagePublisherService = ServiceRegistry.messagePublisherService();
         }
     }
 
@@ -43,6 +48,22 @@ public class SessionImpl implements Session {
             throw new IllegalArgumentException("Insufficient permissions.");
         }
         return rmi_customerService;
+    }
+
+    @Override
+    public MessageConsumerService messageConsumerService() {
+        if (messageConsumerService == null) {
+            throw new IllegalArgumentException("Insufficient permissions.");
+        }
+        return messageConsumerService;
+    }
+
+    @Override
+    public MessagePublisherService messagePublisherService() {
+        if (messagePublisherService == null) {
+            throw new IllegalArgumentException("Insufficient permissions.");
+        }
+        return messagePublisherService;
     }
 
     @Override

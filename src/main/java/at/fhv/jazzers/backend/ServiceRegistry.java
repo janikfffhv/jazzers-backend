@@ -1,7 +1,11 @@
 package at.fhv.jazzers.backend;
 
+import at.fhv.jazzers.backend.application.api.MessageConsumerService;
+import at.fhv.jazzers.backend.application.api.MessagePublisherService;
 import at.fhv.jazzers.backend.application.api.ProductService;
 import at.fhv.jazzers.backend.application.api.SaleService;
+import at.fhv.jazzers.backend.application.impl.MessageConsumerServiceImpl;
+import at.fhv.jazzers.backend.application.impl.MessagePublisherServiceImpl;
 import at.fhv.jazzers.backend.communication.common.api.SessionFactory;
 import at.fhv.jazzers.backend.application.impl.ProductServiceImpl;
 import at.fhv.jazzers.backend.application.impl.SaleServiceImpl;
@@ -11,12 +15,10 @@ import at.fhv.jazzers.backend.domain.repository.CustomerRepository;
 import at.fhv.jazzers.backend.domain.repository.EmployeeRepository;
 import at.fhv.jazzers.backend.domain.repository.ProductRepository;
 import at.fhv.jazzers.backend.domain.repository.SaleRepository;
-import at.fhv.jazzers.backend.infrastructure.HibernateCustomerRepository;
-import at.fhv.jazzers.backend.infrastructure.HibernateEmployeeRepository;
-import at.fhv.jazzers.backend.infrastructure.HibernateProductRepository;
-import at.fhv.jazzers.backend.infrastructure.HibernateSaleRepository;
+import at.fhv.jazzers.backend.infrastructure.*;
 import at.fhv.jazzers.shared.api.RMI_CustomerService;
 import at.fhv.jazzers.shared.api.RMI_SessionFactory;
+import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -28,19 +30,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServiceRegistry {
+    // General
     private static EntityManager entityManager;
 
-    private static SessionFactory sessionFactory;
+    // Application
+    private static MessageConsumerService messageConsumerService;
+    private static MessagePublisherService messagePublisherService;
     private static ProductService productService;
     private static SaleService saleService;
 
+    // Communication
+    private static SessionFactory sessionFactory;
     private static RMI_SessionFactory rmi_sessionFactory;
     private static RMI_CustomerService rmi_customerService;
 
+    // Domain
     private static CustomerRepository customerRepository;
     private static EmployeeRepository employeeRepository;
     private static ProductRepository productRepository;
     private static SaleRepository saleRepository;
+
+    // Infrastructure
+    private static JMSMessageProducer jmsMessageProducer;
+    private static JMSMessageConsumer jmsMessageConsumer;
+    private static ActiveMQConnectionFactory activeMQConnectionFactory;
 
     public static EntityManager entityManager() {
         if (entityManager == null) {
@@ -53,11 +66,18 @@ public class ServiceRegistry {
         return entityManager;
     }
 
-    public static SessionFactory sessionFactory() {
-        if (sessionFactory == null) {
-            sessionFactory = new SessionFactoryImpl();
+    public static MessageConsumerService messageConsumerService() {
+        if (messageConsumerService == null) {
+            messageConsumerService = new MessageConsumerServiceImpl();
         }
-        return sessionFactory;
+        return messageConsumerService;
+    }
+
+    public static MessagePublisherService messagePublisherService() {
+        if (messagePublisherService == null) {
+            messagePublisherService = new MessagePublisherServiceImpl();
+        }
+        return messagePublisherService;
     }
 
     public static ProductService productService() {
@@ -72,6 +92,13 @@ public class ServiceRegistry {
             saleService = new SaleServiceImpl(entityManager(), customerRepository(), productRepository(), saleRepository());
         }
         return saleService;
+    }
+
+    public static SessionFactory sessionFactory() {
+        if (sessionFactory == null) {
+            sessionFactory = new SessionFactoryImpl();
+        }
+        return sessionFactory;
     }
 
     public static RMI_SessionFactory rmi_sessionFactory() throws RemoteException {
@@ -114,5 +141,26 @@ public class ServiceRegistry {
             saleRepository = new HibernateSaleRepository();
         }
         return saleRepository;
+    }
+
+    public static JMSMessageProducer jmsMessageProducer() {
+        if (jmsMessageProducer == null) {
+            jmsMessageProducer = new JMSMessageProducer();
+        }
+        return jmsMessageProducer;
+    }
+
+    public static JMSMessageConsumer jmsMessageConsumer() {
+        if (jmsMessageConsumer == null) {
+            jmsMessageConsumer = new JMSMessageConsumer();
+        }
+        return jmsMessageConsumer;
+    }
+
+    public static ActiveMQConnectionFactory activeMQConnectionFactory() {
+        if (activeMQConnectionFactory == null) {
+            activeMQConnectionFactory = new ActiveMQConnectionFactory("tcp://jazzersactivemq:61616");
+        }
+        return activeMQConnectionFactory;
     }
 }
