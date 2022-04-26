@@ -1,44 +1,75 @@
 package at.fhv.jazzers.backend.infrastructure;
 
 import at.fhv.jazzers.backend.ServiceRegistry;
+import at.fhv.jazzers.backend.domain.model.employee.Employee;
+import at.fhv.jazzers.backend.domain.model.work.Genre;
 
 import javax.jms.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JMSMessageConsumer {
     private Connection connection;
     private Session session;
 
-    public String consume(String topic) {
+    public void createDurableSubscribersFor(List<Employee> employees) {
         connectToMessagingService();
-        String message = readMessageFromTopic(topic);
+
+        try {
+            for (Employee employee : employees) {
+                for (Genre subscribedTopic : employee.subscribedTopics()) {
+                    Topic topic = session.createTopic(subscribedTopic.getName());
+                    String topicName = topic.getTopicName();
+                    String userName = employee.employeeId().username();
+
+                    TopicSubscriber topicSubscriber = session.createDurableSubscriber(topic, userName + "-" + topicName);
+                    topicSubscriber.close();
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to create durable subscribers.");
+        }
+
         disconnectFromMessagingService();
-        return message;
+    }
+
+    public List<TextMessage> getMessagesFromSubscribedTopics(Employee employee) {
+        connectToMessagingService();
+
+        List<TextMessage> textMessages = new ArrayList<>();
+
+        try {
+            for (Genre subscribedTopic : employee.subscribedTopics()) {
+                String userName = employee.employeeId().username();
+                String topicName = subscribedTopic.getName();
+                Topic topic = session.createTopic(topicName);
+
+                TopicSubscriber topicSubscriber = session.createDurableSubscriber(topic, userName + "-" + topicName);
+
+                Message message;
+                while ((message = topicSubscriber.receiveNoWait()) != null) {
+                    textMessages.add((TextMessage) message);
+                }
+
+                topicSubscriber.close();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to read messages.");
+        }
+
+        disconnectFromMessagingService();
+
+        return textMessages;
     }
 
     private void connectToMessagingService() {
         try {
             connection = ServiceRegistry.activeMQConnectionFactory().createConnection();
+            connection.setClientID("client");
             connection.start();
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
         } catch (Exception e) {
             throw new RuntimeException("Unable to connect to messaging service.");
-        }
-    }
-
-    private String readMessageFromTopic(String topic) {
-        try {
-            // ToDo: Use Topic instead of Queue
-            // Destination destination = session.createTopic(topic);
-            Destination destination = session.createQueue(topic);
-            MessageConsumer consumer = session.createConsumer(destination);
-
-            Message message = consumer.receive();
-            String text = (message instanceof TextMessage) ? ((TextMessage) message).getText() : "INVALID TYPE";
-            consumer.close();
-
-            return text;
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to read message from topic");
         }
     }
 

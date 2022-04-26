@@ -2,10 +2,11 @@ package at.fhv.jazzers.backend.communication.rmi;
 
 import at.fhv.jazzers.backend.application.api.MessageConsumerService;
 import at.fhv.jazzers.shared.api.RMI_MessageConsumerService;
+import at.fhv.jazzers.shared.dto.MessageDTO;
 
-import javax.jms.JMSException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 public class RMI_MessageConsumerServiceImpl extends UnicastRemoteObject implements RMI_MessageConsumerService {
     private final MessageConsumerService messageConsumerService;
@@ -16,7 +17,7 @@ public class RMI_MessageConsumerServiceImpl extends UnicastRemoteObject implemen
     }
 
     @Override
-    public String consume(String topic) throws RemoteException {
-        return messageConsumerService.consume(topic);
+    public List<MessageDTO> getMessagesFromSubscribedTopics(String userName) throws RemoteException {
+        return messageConsumerService.getMessagesFromSubscribedTopics(userName);
     }
 }

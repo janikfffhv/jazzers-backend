@@ -29,9 +29,9 @@ public class HibernateEmployeeRepositoryTests {
         EmployeeId christophId = new EmployeeId("cpe2877");
         EmployeeId eliasId = new EmployeeId("eha7244");
 
-        Employee barbaros = new Employee(barbarosId, List.of());
-        Employee christoph = new Employee(christophId, List.of());
-        Employee elias = new Employee(eliasId, List.of());
+        Employee barbaros = new Employee(barbarosId, List.of(), List.of());
+        Employee christoph = new Employee(christophId, List.of(), List.of());
+        Employee elias = new Employee(eliasId, List.of(), List.of());
 
         List<Employee> employees = List.of(barbaros, christoph, elias);
 
@@ -54,9 +54,9 @@ public class HibernateEmployeeRepositoryTests {
         EmployeeId christophId = new EmployeeId("cpe2877");
         EmployeeId eliasId = new EmployeeId("eha7244");
 
-        Employee barbaros = new Employee(barbarosId, List.of());
-        Employee christoph = new Employee(christophId, List.of());
-        Employee elias = new Employee(eliasId, List.of());
+        Employee barbaros = new Employee(barbarosId, List.of(), List.of());
+        Employee christoph = new Employee(christophId, List.of(), List.of());
+        Employee elias = new Employee(eliasId, List.of(), List.of());
 
         List<Employee> employees = List.of(barbaros, christoph, elias);
 

@@ -26,11 +26,11 @@ public class JMSMessageProducer {
 
     private void sendMessageToTopic(String topic, String title, String message) {
         try {
-            // ToDo: Use Topic instead of Queue
-            // Destination destination = session.createTopic(topic);
-            Destination destination = session.createQueue(topic);
-            TextMessage textMessage = session.createTextMessage(title + "\n" + message);
+            Destination destination = session.createTopic(topic);
 
+            TextMessage textMessage = session.createTextMessage(message);
+            textMessage.setStringProperty("topic", topic);
+            textMessage.setStringProperty("title", title);
 
             MessageProducer messageProducer = session.createProducer(destination);
             messageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);

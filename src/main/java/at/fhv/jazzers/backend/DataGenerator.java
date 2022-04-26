@@ -1,5 +1,6 @@
 package at.fhv.jazzers.backend;
 
+import at.fhv.jazzers.backend.application.api.MessageConsumerService;
 import at.fhv.jazzers.backend.domain.model.customer.Customer;
 import at.fhv.jazzers.backend.domain.model.customer.CustomerId;
 import at.fhv.jazzers.backend.domain.model.customer.Playlist;
@@ -14,12 +15,19 @@ import at.fhv.jazzers.backend.domain.model.sale.Sale;
 import at.fhv.jazzers.backend.domain.model.work.Genre;
 import at.fhv.jazzers.backend.domain.model.work.Work;
 import at.fhv.jazzers.backend.domain.model.work.WorkId;
+import at.fhv.jazzers.backend.infrastructure.JMSMessageConsumer;
+import at.fhv.jazzers.backend.infrastructure.JMSMessageProducer;
+import at.fhv.jazzers.shared.dto.MessageDTO;
 
+import javax.jms.JMSException;
+import javax.jms.TextMessage;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class DataGenerator {
     private static final List<Customer> customers = new ArrayList<>();
@@ -36,20 +44,25 @@ public class DataGenerator {
     public static void main(String[] args) {
         generateData();
         persistData();
+        createDurableSubscribers();
+        createInitialTopicMessages();
     }
 
     private static void generateData() {
-        Employee employee1 = new Employee(new EmployeeId("aar9086"), List.of(Role.STANDARD, Role.OPERATOR));
-        Employee employee2 = new Employee(new EmployeeId("ace9467"), List.of(Role.STANDARD, Role.OPERATOR));
-        Employee employee3 = new Employee(new EmployeeId("bte3268"), List.of(Role.STANDARD, Role.OPERATOR));
-        Employee employee4 = new Employee(new EmployeeId("cpe2877"), List.of(Role.STANDARD, Role.OPERATOR));
-        Employee employee5 = new Employee(new EmployeeId("eha7244"), List.of(Role.STANDARD, Role.OPERATOR));
-        Employee employee6 = new Employee(new EmployeeId("jfu5402"), List.of(Role.STANDARD, Role.OPERATOR));
-        Employee employee7 = new Employee(new EmployeeId("ppl8596"), List.of(Role.STANDARD, Role.OPERATOR));
-        Employee employee8 = new Employee(new EmployeeId("tf-test"), List.of(Role.STANDARD, Role.OPERATOR));
-        Employee employee9 = new Employee(new EmployeeId("roles-standard"), List.of(Role.STANDARD));
-        Employee employee10 = new Employee(new EmployeeId("roles-operator"), List.of(Role.OPERATOR));
-        Employee employee11 = new Employee(new EmployeeId("roles-standard-and-operator"), List.of(Role.STANDARD, Role.OPERATOR));
+        List<Role> allRoles = Arrays.stream(Role.values()).collect(Collectors.toList());
+        List<Genre> allTopics = Arrays.stream(Genre.values()).collect(Collectors.toList());
+
+        Employee employee1 = new Employee(new EmployeeId("aar9086"), allRoles, allTopics);
+        Employee employee2 = new Employee(new EmployeeId("ace9467"), allRoles, allTopics);
+        Employee employee3 = new Employee(new EmployeeId("bte3268"), allRoles, allTopics);
+        Employee employee4 = new Employee(new EmployeeId("cpe2877"), allRoles, List.of(Genre.METAL));
+        Employee employee5 = new Employee(new EmployeeId("eha7244"), allRoles, allTopics);
+        Employee employee6 = new Employee(new EmployeeId("jfu5402"), allRoles, allTopics);
+        Employee employee7 = new Employee(new EmployeeId("ppl8596"), allRoles, allTopics);
+        Employee employee8 = new Employee(new EmployeeId("tf-test"), allRoles, allTopics);
+        Employee employee9 = new Employee(new EmployeeId("roles-standard"), List.of(Role.STANDARD), List.of());
+        Employee employee10 = new Employee(new EmployeeId("roles-operator"), List.of(Role.OPERATOR), List.of());
+        Employee employee11 = new Employee(new EmployeeId("roles-standard-and-operator"), allRoles, List.of());
         employees.addAll(List.of(employee1, employee2, employee3, employee4, employee5, employee6, employee7, employee8, employee9, employee10, employee11));
 
         Customer customer1 = new Customer(new CustomerId(UUID.randomUUID()), List.of(), List.of());
@@ -126,5 +139,23 @@ public class DataGenerator {
         works.forEach(em::persist);
 
         em.getTransaction().commit();
+    }
+
+    private static void createDurableSubscribers() {
+        JMSMessageConsumer jmsMessageConsumer = ServiceRegistry.jmsMessageConsumer();
+        jmsMessageConsumer.createDurableSubscribersFor(employees);
+    }
+
+    private static void createInitialTopicMessages() {
+        JMSMessageProducer jmsMessageProducer = ServiceRegistry.jmsMessageProducer();
+        jmsMessageProducer.publish("Jazz", "Jazz-Title 1", "Some amazing message about Jazz!");
+
+        jmsMessageProducer.publish("Rock", "Rock-Title 1", "Some amazing message about Rock!");
+        jmsMessageProducer.publish("Rock", "Rock-Title 2", "Some amazing message about Rock!!");
+        jmsMessageProducer.publish("Rock", "Rock-Title 3", "Some amazing message about Rock!!!");
+        jmsMessageProducer.publish("Rock", "Rock-Title 4", "Some amazing message about Rock!!!!");
+
+        jmsMessageProducer.publish("Metal", "Metal-Title 1", "Some amazing message about Metal!");
+        jmsMessageProducer.publish("Metal", "Metal-Title 2", "Some amazing message about Metal!!");
     }
 }
