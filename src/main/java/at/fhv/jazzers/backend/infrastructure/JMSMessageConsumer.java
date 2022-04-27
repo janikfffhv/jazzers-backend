@@ -6,7 +6,10 @@ import at.fhv.jazzers.backend.domain.model.work.Genre;
 
 import javax.jms.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JMSMessageConsumer {
     private Connection connection;
@@ -47,9 +50,12 @@ public class JMSMessageConsumer {
                 TopicSubscriber topicSubscriber = session.createDurableSubscriber(topic, userName + "-" + topicName);
 
                 Message message;
+                List<TextMessage> topicsOfCurrentGenre = new ArrayList<>();
                 while ((message = topicSubscriber.receiveNoWait()) != null) {
-                    textMessages.add((TextMessage) message);
+                    topicsOfCurrentGenre.add((TextMessage) message);
                 }
+                Collections.reverse(topicsOfCurrentGenre);
+                textMessages.addAll(topicsOfCurrentGenre);
 
                 topicSubscriber.close();
             }

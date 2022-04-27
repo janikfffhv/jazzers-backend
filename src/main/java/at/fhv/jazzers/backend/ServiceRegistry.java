@@ -159,7 +159,7 @@ public class ServiceRegistry {
 
     public static ActiveMQConnectionFactory activeMQConnectionFactory() {
         if (activeMQConnectionFactory == null) {
-            activeMQConnectionFactory = new ActiveMQConnectionFactory("tcp://jazzersactivemq:61616");
+            activeMQConnectionFactory = new ActiveMQConnectionFactory("tcp://jazzersactivemq:61616?jms.prefetchPolicy.all=0");
         }
         return activeMQConnectionFactory;
     }
