@@ -11,6 +11,7 @@ import at.fhv.jazzers.backend.domain.model.product.ProductId;
 import at.fhv.jazzers.backend.domain.repository.CustomerRepository;
 import at.fhv.jazzers.backend.domain.repository.ProductRepository;
 import at.fhv.jazzers.backend.domain.repository.SaleRepository;
+import at.fhv.jazzers.shared.api.RMI_CustomerService;
 import at.fhv.jazzers.shared.dto.LineDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class SaleServiceTests {
+    private RMI_CustomerService rmi_customerService;
     private CustomerRepository customerRepository;
     private ProductRepository productRepository;
     private SaleRepository saleRepository;
@@ -32,10 +34,11 @@ public class SaleServiceTests {
 
     @BeforeEach
     void setup() {
+        rmi_customerService = mock(RMI_CustomerService.class);
         customerRepository = mock(CustomerRepository.class);
         productRepository = mock(ProductRepository.class);
         saleRepository = mock(SaleRepository.class);
-        saleService = new SaleServiceImpl(ServiceRegistry.entityManager(), customerRepository, productRepository, saleRepository);
+        saleService = new SaleServiceImpl(ServiceRegistry.entityManager(), rmi_customerService, customerRepository, productRepository, saleRepository);
     }
 
     @Test

@@ -1,10 +1,11 @@
 package at.fhv.jazzers.backend.domain.model.employee;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class EmployeeId {
+public class EmployeeId implements Serializable {
     // Properties
     private String username;
 

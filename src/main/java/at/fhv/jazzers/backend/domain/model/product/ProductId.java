@@ -3,11 +3,12 @@ package at.fhv.jazzers.backend.domain.model.product;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 @Embeddable
-public class ProductId {
+public class ProductId implements Serializable {
     // Properties
     @Type(type = "uuid-char")
     private UUID id;

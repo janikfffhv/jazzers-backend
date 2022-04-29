@@ -89,7 +89,7 @@ public class ServiceRegistry {
 
     public static SaleService saleService() {
         if (saleService == null) {
-            saleService = new SaleServiceImpl(entityManager(), customerRepository(), productRepository(), saleRepository());
+            saleService = new SaleServiceImpl(entityManager(), rmi_customerService(), customerRepository(), productRepository(), saleRepository());
         }
         return saleService;
     }
@@ -108,9 +108,14 @@ public class ServiceRegistry {
         return rmi_sessionFactory;
     }
 
-    public static RMI_CustomerService rmi_customerService() throws MalformedURLException, NotBoundException, RemoteException {
+    public static RMI_CustomerService rmi_customerService() {
         if (rmi_customerService == null) {
-            rmi_customerService = (RMI_CustomerService) Naming.lookup("rmi://" + System.getenv("CUSTOMER_RMI_HOST") + ":" + System.getenv("CUSTOMER_RMI_PORT") + "/customerService");
+            try {
+                rmi_customerService = (RMI_CustomerService) Naming.lookup("rmi://" + System.getenv("CUSTOMER_RMI_HOST") + ":" + System.getenv("CUSTOMER_RMI_PORT") + "/customerService");
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new IllegalStateException("Unable to connect to customer service.");
+            }
         }
         return rmi_customerService;
     }

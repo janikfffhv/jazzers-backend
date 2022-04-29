@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface CustomerRepository {
     Optional<Customer> byId(CustomerId customerId);
+    void save(Customer customer);
 }

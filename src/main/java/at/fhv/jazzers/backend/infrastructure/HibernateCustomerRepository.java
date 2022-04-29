@@ -4,9 +4,13 @@ import at.fhv.jazzers.backend.ServiceRegistry;
 import at.fhv.jazzers.backend.domain.model.customer.Customer;
 import at.fhv.jazzers.backend.domain.model.customer.CustomerId;
 import at.fhv.jazzers.backend.domain.repository.CustomerRepository;
+import at.fhv.jazzers.shared.api.RMI_CustomerService;
+import at.fhv.jazzers.shared.dto.CustomerDetailDTO;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class HibernateCustomerRepository implements CustomerRepository {
     private final EntityManager entityManager;
@@ -23,5 +27,10 @@ public class HibernateCustomerRepository implements CustomerRepository {
                 .getResultList()
                 .stream()
                 .findFirst();
+    }
+
+    @Override
+    public void save(Customer customer) {
+        entityManager.persist(customer);
     }
 }

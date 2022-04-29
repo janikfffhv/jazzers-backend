@@ -3,11 +3,12 @@ package at.fhv.jazzers.backend.domain.model.interpret;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 @Embeddable
-public class InterpretId {
+public class InterpretId implements Serializable {
     // Properties
     @Type(type = "uuid-char")
     private UUID id;

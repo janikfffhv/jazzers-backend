@@ -6,10 +6,8 @@ import at.fhv.jazzers.backend.domain.model.work.Genre;
 
 import javax.jms.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class JMSMessageConsumer {
     private Connection connection;
