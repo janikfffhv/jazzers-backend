@@ -25,7 +25,6 @@ public class Sale {
     private Customer customer;
 
 
-
     // Constructors
     protected Sale() {
 
@@ -47,10 +46,8 @@ public class Sale {
     }
 
 
-
     // Domain Methods
     // -
-
 
 
     // Getters
@@ -78,5 +75,15 @@ public class Sale {
         }
 
         return saleTotal;
+    }
+
+    public int amountTotal() {
+        int amountTotal = 0;
+
+        for (Line line : lines) {
+            amountTotal += line.amount();
+        }
+
+        return amountTotal;
     }
 }

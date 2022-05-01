@@ -14,6 +14,7 @@ import at.fhv.jazzers.backend.domain.repository.SaleRepository;
 import at.fhv.jazzers.shared.api.RMI_CustomerService;
 import at.fhv.jazzers.shared.dto.CustomerDetailDTO;
 import at.fhv.jazzers.shared.dto.LineDTO;
+import at.fhv.jazzers.shared.dto.SaleHistoryEntryOverviewDTO;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -90,5 +91,39 @@ public class SaleServiceImpl implements SaleService {
             customerRepository.save(new Customer(new CustomerId(customerId), List.of(), List.of()));
             entityManager.getTransaction().commit();
         }
+    }
+
+    @Override
+    public List<SaleHistoryEntryOverviewDTO> saleHistoryFull() {
+        List<Sale> sales = saleRepository.getAll();
+        List<SaleHistoryEntryOverviewDTO> salesDTO = new ArrayList<>();
+
+        try {
+            for (Sale sale : sales) {
+                String customerFirstName = "";
+                String customerLastName = "";
+
+                if (sale.customer() != null) {
+                    CustomerDetailDTO customerDTO = rmi_customerService.searchById(sale.customer().customerId().id());
+                    customerFirstName = customerDTO.getFirstName();
+                    customerLastName = customerDTO.getLastName();
+                }
+
+                SaleHistoryEntryOverviewDTO saleDTO = new SaleHistoryEntryOverviewDTO(sale.saleId().id(), customerFirstName, customerLastName, sale.saleTotal(), sale.amountTotal());
+                salesDTO.add(saleDTO);
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("Jazzers-Backend is unable to use customer service. There may be a problem due to RMI.");
+        }
+
+        return salesDTO;
+    }
+
+    @Override
+    public List<SaleHistoryEntryOverviewDTO> saleHistoryBy(String customerNameOrSaleId) {
+        return saleHistoryFull()
+                .stream()
+                .filter(sale -> sale.getSaleId().toString().contains(customerNameOrSaleId) || sale.getFirstName().concat(" " + sale.getLastName()).toLowerCase().contains(customerNameOrSaleId.toLowerCase()))
+                .collect(Collectors.toList());
     }
 }

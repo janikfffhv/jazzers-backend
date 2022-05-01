@@ -3,7 +3,7 @@ package at.fhv.jazzers.backend.communication.rmi;
 import at.fhv.jazzers.backend.application.api.SaleService;
 import at.fhv.jazzers.shared.api.RMI_SaleService;
 import at.fhv.jazzers.shared.dto.LineDTO;
-import at.fhv.jazzers.shared.dto.SaleHistoryDTO;
+import at.fhv.jazzers.shared.dto.SaleHistoryEntryOverviewDTO;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -29,12 +29,12 @@ public class RMI_SaleServiceImpl extends UnicastRemoteObject implements RMI_Sale
     }
 
     @Override
-    public List<SaleHistoryDTO> saleHistoryFull() throws RemoteException {
-        return null;
+    public List<SaleHistoryEntryOverviewDTO> saleHistoryFull() throws RemoteException {
+        return saleService.saleHistoryFull();
     }
 
     @Override
-    public List<SaleHistoryDTO> saleHistoryForCustomer(UUID customerId) throws RemoteException {
-        return null;
+    public List<SaleHistoryEntryOverviewDTO> saleHistoryBy(String customerNameOrSaleId) throws RemoteException {
+        return saleService.saleHistoryBy(customerNameOrSaleId);
     }
 }
