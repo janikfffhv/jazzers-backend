@@ -4,16 +4,14 @@ import at.fhv.jazzers.backend.application.api.SaleService;
 import at.fhv.jazzers.backend.domain.model.customer.Customer;
 import at.fhv.jazzers.backend.domain.model.customer.CustomerId;
 import at.fhv.jazzers.backend.domain.model.product.ProductId;
-import at.fhv.jazzers.backend.domain.model.sale.Line;
-import at.fhv.jazzers.backend.domain.model.sale.Sale;
-import at.fhv.jazzers.backend.domain.model.sale.SaleId;
-import at.fhv.jazzers.backend.domain.model.sale.SaleType;
+import at.fhv.jazzers.backend.domain.model.sale.*;
 import at.fhv.jazzers.backend.domain.repository.CustomerRepository;
 import at.fhv.jazzers.backend.domain.repository.ProductRepository;
 import at.fhv.jazzers.backend.domain.repository.SaleRepository;
 import at.fhv.jazzers.shared.api.RMI_CustomerService;
 import at.fhv.jazzers.shared.dto.CustomerDetailDTO;
 import at.fhv.jazzers.shared.dto.LineDTO;
+import at.fhv.jazzers.shared.dto.SaleHistoryEntryDetailDTO;
 import at.fhv.jazzers.shared.dto.SaleHistoryEntryOverviewDTO;
 
 import javax.persistence.EntityManager;
@@ -46,33 +44,40 @@ public class SaleServiceImpl implements SaleService {
 
         List<Line> lines = linesDTO
                 .stream()
-                .map(lineDTO -> new Line(lineDTO.getAmount(), productRepository.byId(new ProductId(lineDTO.getProductId())).orElseThrow()))
+                .map(lineDTO -> new Line(new LineId(lineDTO.getLineId()), lineDTO.getAmountPurchased(), lineDTO.getAmountRefunded(), productRepository.byId(new ProductId(lineDTO.getProductId())).orElseThrow()))
                 .collect(Collectors.toList());
 
-        Sale sale = Sale.create(new SaleId(UUID.randomUUID()), SaleType.PURCHASE, lines, customer.orElse(null));
+        Sale sale = Sale.create(new SaleId(UUID.randomUUID()), lines, customer.orElse(null));
 
         entityManager.getTransaction().begin();
-        lines.forEach(line -> line.product().takeFromStock(line.amount()));
+        lines.forEach(line -> line.product().takeFromStock(line.amountPurchased()));
         saleRepository.save(sale);
         entityManager.getTransaction().commit();
     }
 
     @Override
-    public void refund(UUID customerId, List<LineDTO> linesDTO) {
-        saveExternalCustomerLocallyIfExists(customerId);
+    public void refund(UUID saleId, List<LineDTO> linesDTO) {
+        Optional<Sale> optionalSale = saleRepository.byId(new SaleId(saleId));
 
-        Optional<Customer> customer = customerRepository.byId(new CustomerId(customerId));
+        if (optionalSale.isEmpty()) {
+            throw new IllegalArgumentException("The sale with the id " + saleId + " does not exist");
+        }
 
-        List<Line> lines = linesDTO
+        Optional<Customer> customer = customerRepository.byId(new CustomerId(optionalSale.get().saleId().id()));
+
+        // List<Line> linesBefore = optionalSale.get().lines();
+
+        List<Line> linesNew = linesDTO
                 .stream()
-                .map(lineDTO -> new Line(lineDTO.getAmount(), productRepository.byId(new ProductId(lineDTO.getProductId())).orElseThrow()))
+                .map(lineDTO -> new Line(new LineId(lineDTO.getLineId()), lineDTO.getAmountPurchased(), lineDTO.getAmountRefunded(), productRepository.byId(new ProductId(lineDTO.getProductId())).orElseThrow()))
                 .collect(Collectors.toList());
 
-        Sale sale = Sale.create(new SaleId(UUID.randomUUID()), SaleType.REFUND, lines, customer.orElse(null));
+        optionalSale.get().updateRefunds(linesNew);
 
         entityManager.getTransaction().begin();
-        lines.forEach(line -> line.product().addToStock(line.amount()));
-        saleRepository.save(sale);
+        // linesBefore.forEach(line -> line.product().takeFromStock(line.amountRefunded()));
+        // linesNew.forEach(line -> line.product().addToStock(line.amountRefunded()));
+        entityManager.persist(optionalSale.get());
         entityManager.getTransaction().commit();
     }
 
@@ -110,7 +115,7 @@ public class SaleServiceImpl implements SaleService {
                     customerLastName = customerDTO.getLastName();
                 }
 
-                SaleHistoryEntryOverviewDTO saleDTO = new SaleHistoryEntryOverviewDTO(sale.saleId().id(), customerFirstName, customerLastName, sale.saleTotal(), sale.amountTotal());
+                SaleHistoryEntryOverviewDTO saleDTO = new SaleHistoryEntryOverviewDTO(sale.saleId().id(), customerFirstName, customerLastName, sale.salePurchaseTotal(), sale.amountPurchasedTotal());
                 salesDTO.add(saleDTO);
             }
         } catch (Exception e) {
@@ -126,5 +131,26 @@ public class SaleServiceImpl implements SaleService {
                 .stream()
                 .filter(sale -> sale.getSaleId().toString().contains(customerNameOrSaleId) || sale.getFirstName().concat(" " + sale.getLastName()).toLowerCase().contains(customerNameOrSaleId.toLowerCase()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public SaleHistoryEntryDetailDTO saleDetail(UUID saleId) {
+        Optional<Sale> sale = saleRepository.byId(new SaleId(saleId));
+
+        if (sale.isEmpty()) {
+            throw new IllegalArgumentException("The sale with the id + " + saleId + " does not exist!");
+        }
+
+        if (sale.get().customer() == null) {
+            return new SaleHistoryEntryDetailDTO(null, "", "", null, saleId, sale.get().saleDate(), sale.get().lines().stream().map(line -> new LineDTO(line.lineId().id(), line.product().productId().id(), line.product().title(), line.product().price(), line.amountPurchased(), line.amountRefunded())).collect(Collectors.toList()));
+        } else {
+            try {
+                UUID customerId = sale.get().customer().customerId().id();
+                CustomerDetailDTO customerDTO = rmi_customerService.searchById(customerId);
+                return new SaleHistoryEntryDetailDTO(customerId, customerDTO.getFirstName(), customerDTO.getLastName(), customerDTO.getAddressDTO(), saleId, sale.get().saleDate(), sale.get().lines().stream().map(line -> new LineDTO(line.lineId().id(), line.product().productId().id(), line.product().title(), line.product().price(), line.amountPurchased(), line.amountRefunded())).collect(Collectors.toList()));
+            } catch (Exception e) {
+                throw new IllegalStateException("Jazzers-Backend is unable to use customer service. There may be a problem due to RMI.");
+            }
+        }
     }
 }

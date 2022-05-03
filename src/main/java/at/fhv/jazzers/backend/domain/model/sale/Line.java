@@ -4,7 +4,6 @@ import at.fhv.jazzers.backend.domain.model.product.Product;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 public class Line implements Serializable {
@@ -13,9 +12,14 @@ public class Line implements Serializable {
     @GeneratedValue
     private Long lineIdInternal;
 
-    private int amount;
+    @Embedded
+    private LineId lineId;
 
-    @OneToOne
+    private int amountPurchased;
+
+    private int amountRefunded;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Product product;
 
 
@@ -25,39 +29,59 @@ public class Line implements Serializable {
 
     }
 
-    public Line(int amount, Product product) {
-        this.amount = amount;
+    public Line(LineId lineId, int amountPurchased, int amountRefunded, Product product) {
+        this.lineId = lineId;
+        this.amountPurchased = amountPurchased;
+        this.amountRefunded = amountRefunded;
         this.product = product;
     }
 
+    // Domain Methods
+    public void updateAmountRefunded(int amountRefunded) {
+        if (amountRefunded < 0) {
+            throw new IllegalArgumentException("Refund amount must not be negative!");
+        }
 
+        if (this.amountPurchased < amountRefunded) {
+            throw new IllegalArgumentException("You can not refund more than you have bought!");
+        }
+
+        int difference = amountRefunded - this.amountRefunded;
+
+        if (difference < 0) {
+            throw new IllegalArgumentException("You can not refund refunds!");
+        }
+
+        this.amountRefunded += difference;
+        this.product.addToStock(difference);
+    }
 
     // Getters
-    public int amount() {
-        return amount;
+    public LineId lineId() {
+        return lineId;
+    }
+
+    public int amountPurchased() {
+        return amountPurchased;
+    }
+
+    public int amountRefunded() {
+        return amountRefunded;
     }
 
     public Product product() {
         return product;
     }
 
-    public double lineTotal() {
-        return amount * product().price();
+    public double linePurchaseTotal() {
+        return amountPurchased * product().price();
     }
 
-
-
-    // Equals and HashCode
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Line line = (Line) o;
-        return amount == line.amount && product.equals(line.product);
+    public double lineRefundTotal() {
+        return amountRefunded * product().price();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(amount, product);
+    public double lineActualTotal() {
+        return linePurchaseTotal() - lineRefundTotal();
     }
 }

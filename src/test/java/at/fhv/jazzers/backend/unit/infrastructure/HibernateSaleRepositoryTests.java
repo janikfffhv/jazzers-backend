@@ -7,10 +7,7 @@ import at.fhv.jazzers.backend.domain.model.product.Label;
 import at.fhv.jazzers.backend.domain.model.product.Medium;
 import at.fhv.jazzers.backend.domain.model.product.Product;
 import at.fhv.jazzers.backend.domain.model.product.ProductId;
-import at.fhv.jazzers.backend.domain.model.sale.Line;
-import at.fhv.jazzers.backend.domain.model.sale.Sale;
-import at.fhv.jazzers.backend.domain.model.sale.SaleId;
-import at.fhv.jazzers.backend.domain.model.sale.SaleType;
+import at.fhv.jazzers.backend.domain.model.sale.*;
 import at.fhv.jazzers.backend.domain.repository.SaleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,17 +36,17 @@ public class HibernateSaleRepositoryTests {
         Label label = new Label("Label");
         Product product = new Product(new ProductId(UUID.randomUUID()), "Title", interpret, 2010, 10.0d, 100, Medium.VINYL, label, List.of(), List.of());
 
-        Line line1 = new Line(1, product);
-        Line line2 = new Line(1, product);
-        Line line3 = new Line(1, product);
+        Line line1 = new Line(new LineId(UUID.randomUUID()), 1, 0, product);
+        Line line2 = new Line(new LineId(UUID.randomUUID()), 1, 0, product);
+        Line line3 = new Line(new LineId(UUID.randomUUID()), 1, 0, product);
 
         SaleId sale1Id = new SaleId(UUID.randomUUID());
         SaleId sale2Id = new SaleId(UUID.randomUUID());
         SaleId sale3Id = new SaleId(UUID.randomUUID());
 
-        Sale sale1 = Sale.create(sale1Id, SaleType.PURCHASE, List.of(line1), null);
-        Sale sale2 = Sale.create(sale2Id, SaleType.PURCHASE, List.of(line2), null);
-        Sale sale3 = Sale.create(sale3Id, SaleType.PURCHASE, List.of(line3), null);
+        Sale sale1 = Sale.create(sale1Id, List.of(line1), null);
+        Sale sale2 = Sale.create(sale2Id, List.of(line2), null);
+        Sale sale3 = Sale.create(sale3Id, List.of(line3), null);
 
         List<Sale> sales = List.of(sale1, sale2, sale3);
 
@@ -73,17 +70,17 @@ public class HibernateSaleRepositoryTests {
         Label label = new Label("Label");
         Product product = new Product(new ProductId(UUID.randomUUID()), "Title", interpret, 2010, 10.0d, 100, Medium.VINYL, label, List.of(), List.of());
 
-        Line line1 = new Line(1, product);
-        Line line2 = new Line(1, product);
-        Line line3 = new Line(1, product);
+        Line line1 = new Line(new LineId(UUID.randomUUID()), 1, 0, product);
+        Line line2 = new Line(new LineId(UUID.randomUUID()), 1, 0, product);
+        Line line3 = new Line(new LineId(UUID.randomUUID()), 1, 0, product);
 
         SaleId sale1Id = new SaleId(UUID.randomUUID());
         SaleId sale2Id = new SaleId(UUID.randomUUID());
         SaleId sale3Id = new SaleId(UUID.randomUUID());
 
-        Sale sale1 = Sale.create(sale1Id, SaleType.PURCHASE, List.of(line1), null);
-        Sale sale2 = Sale.create(sale2Id, SaleType.PURCHASE, List.of(line2), null);
-        Sale sale3 = Sale.create(sale3Id, SaleType.PURCHASE, List.of(line3), null);
+        Sale sale1 = Sale.create(sale1Id, List.of(line1), null);
+        Sale sale2 = Sale.create(sale2Id, List.of(line2), null);
+        Sale sale3 = Sale.create(sale3Id, List.of(line3), null);
 
         List<Sale> sales = List.of(sale1, sale2, sale3);
 
