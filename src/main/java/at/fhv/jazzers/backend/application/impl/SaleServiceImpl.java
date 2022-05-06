@@ -115,7 +115,7 @@ public class SaleServiceImpl implements SaleService {
                     customerLastName = customerDTO.getLastName();
                 }
 
-                SaleHistoryEntryOverviewDTO saleDTO = new SaleHistoryEntryOverviewDTO(sale.saleId().id(), customerFirstName, customerLastName, sale.salePurchaseTotal(), sale.amountPurchasedTotal());
+                SaleHistoryEntryOverviewDTO saleDTO = new SaleHistoryEntryOverviewDTO(sale.saleId().id(), customerFirstName, customerLastName, sale.salePurchaseTotal(), sale.amountPurchasedTotal(), sale.saleDate());
                 salesDTO.add(saleDTO);
             }
         } catch (Exception e) {
