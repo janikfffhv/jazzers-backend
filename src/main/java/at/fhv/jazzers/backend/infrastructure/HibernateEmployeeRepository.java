@@ -5,9 +5,11 @@ import at.fhv.jazzers.backend.domain.model.employee.Employee;
 import at.fhv.jazzers.backend.domain.model.employee.EmployeeId;
 import at.fhv.jazzers.backend.domain.repository.EmployeeRepository;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
+@Stateless
 public class HibernateEmployeeRepository implements EmployeeRepository {
     private final EntityManager entityManager;
 

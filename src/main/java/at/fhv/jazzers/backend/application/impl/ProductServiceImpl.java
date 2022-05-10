@@ -5,11 +5,19 @@ import at.fhv.jazzers.backend.domain.model.product.Medium;
 import at.fhv.jazzers.backend.domain.repository.ProductRepository;
 import at.fhv.jazzers.shared.dto.ProductOverviewDTO;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Stateless
 public class ProductServiceImpl implements ProductService {
-    private final ProductRepository productRepository;
+    @EJB
+    private ProductRepository productRepository;
+
+    public ProductServiceImpl() {
+
+    }
 
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;

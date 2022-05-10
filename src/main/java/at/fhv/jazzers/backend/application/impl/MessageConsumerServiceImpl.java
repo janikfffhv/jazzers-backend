@@ -1,6 +1,5 @@
 package at.fhv.jazzers.backend.application.impl;
 
-import at.fhv.jazzers.backend.ServiceRegistry;
 import at.fhv.jazzers.backend.application.api.MessageConsumerService;
 import at.fhv.jazzers.backend.domain.model.employee.Employee;
 import at.fhv.jazzers.backend.domain.model.employee.EmployeeId;
@@ -8,21 +7,26 @@ import at.fhv.jazzers.backend.domain.repository.EmployeeRepository;
 import at.fhv.jazzers.backend.infrastructure.JMSMessageConsumer;
 import at.fhv.jazzers.shared.dto.MessageDTO;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.jms.TextMessage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Stateless
 public class MessageConsumerServiceImpl implements MessageConsumerService {
-    JMSMessageConsumer jmsMessageConsumer;
+    @EJB
+    private JMSMessageConsumer jmsMessageConsumer;
+    @EJB
+    private EmployeeRepository employeeRepository;
 
     public MessageConsumerServiceImpl() {
-        jmsMessageConsumer = ServiceRegistry.jmsMessageConsumer();
+
     }
 
     @Override
     public List<MessageDTO> getMessagesFromSubscribedTopics(String userName) {
-        EmployeeRepository employeeRepository = ServiceRegistry.employeeRepository();
         Optional<Employee> employee = employeeRepository.byId(new EmployeeId(userName));
 
         if (employee.isEmpty()) {

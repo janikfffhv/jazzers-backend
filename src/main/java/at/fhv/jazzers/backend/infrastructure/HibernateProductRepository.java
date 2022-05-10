@@ -5,10 +5,12 @@ import at.fhv.jazzers.backend.domain.model.product.Product;
 import at.fhv.jazzers.backend.domain.model.product.ProductId;
 import at.fhv.jazzers.backend.domain.repository.ProductRepository;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
+@Stateless
 public class HibernateProductRepository implements ProductRepository {
     private final EntityManager entityManager;
 

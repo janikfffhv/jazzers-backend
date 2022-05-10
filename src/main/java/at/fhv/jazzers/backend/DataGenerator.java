@@ -1,6 +1,5 @@
 package at.fhv.jazzers.backend;
 
-import at.fhv.jazzers.backend.application.api.MessageConsumerService;
 import at.fhv.jazzers.backend.domain.model.customer.Customer;
 import at.fhv.jazzers.backend.domain.model.customer.CustomerId;
 import at.fhv.jazzers.backend.domain.model.customer.Playlist;
@@ -17,38 +16,46 @@ import at.fhv.jazzers.backend.domain.model.work.Work;
 import at.fhv.jazzers.backend.domain.model.work.WorkId;
 import at.fhv.jazzers.backend.infrastructure.JMSMessageConsumer;
 import at.fhv.jazzers.backend.infrastructure.JMSMessageProducer;
-import at.fhv.jazzers.shared.dto.MessageDTO;
 
-import javax.jms.JMSException;
-import javax.jms.TextMessage;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Startup
+@Singleton
 public class DataGenerator {
-    private static final List<Customer> customers = new ArrayList<>();
-    private static final List<Playlist> playlists = new ArrayList<>();
-    private static final List<Employee> employees = new ArrayList<>();
-    private static final List<Interpret> interprets = new ArrayList<>();
-    private static final List<Label> labels = new ArrayList<>();
-    private static final List<Product> products = new ArrayList<>();
-    private static final List<Supplier> suppliers = new ArrayList<>();
-    private static final List<Line> lines = new ArrayList<>();
-    private static final List<Sale> sales = new ArrayList<>();
-    private static final List<Work> works = new ArrayList<>();
+    @EJB
+    private JMSMessageConsumer jmsMessageConsumer;
+    @EJB
+    private JMSMessageProducer jmsMessageProducer;
 
-    public static void main(String[] args) {
+    private final List<Customer> customers = new ArrayList<>();
+    private final List<Playlist> playlists = new ArrayList<>();
+    private final List<Employee> employees = new ArrayList<>();
+    private final List<Interpret> interprets = new ArrayList<>();
+    private final List<Label> labels = new ArrayList<>();
+    private final List<Product> products = new ArrayList<>();
+    private final List<Supplier> suppliers = new ArrayList<>();
+    private final List<Line> lines = new ArrayList<>();
+    private final List<Sale> sales = new ArrayList<>();
+    private final List<Work> works = new ArrayList<>();
+
+    @PostConstruct
+    public void init() {
         generateData();
         persistData();
         createDurableSubscribers();
         createInitialTopicMessages();
     }
 
-    private static void generateData() {
+    private void generateData() {
         List<Role> allRoles = Arrays.stream(Role.values()).collect(Collectors.toList());
         List<Genre> allTopics = Arrays.stream(Genre.values()).collect(Collectors.toList());
 
@@ -119,7 +126,7 @@ public class DataGenerator {
         products.addAll(List.of(kindOfBlueVinyl, meteoraVinyl, meteoraCD, humanityCD, humanityMP3));
     }
 
-    private static void persistData() {
+    private void persistData() {
         EntityManager em = ServiceRegistry.entityManager();
         em.getTransaction().begin();
 
@@ -141,13 +148,11 @@ public class DataGenerator {
         em.getTransaction().commit();
     }
 
-    private static void createDurableSubscribers() {
-        JMSMessageConsumer jmsMessageConsumer = ServiceRegistry.jmsMessageConsumer();
+    private void createDurableSubscribers() {
         jmsMessageConsumer.createDurableSubscribersFor(employees);
     }
 
-    private static void createInitialTopicMessages() {
-        JMSMessageProducer jmsMessageProducer = ServiceRegistry.jmsMessageProducer();
+    private void createInitialTopicMessages() {
         jmsMessageProducer.publish("Jazz", "Jazz-Title 1", "Some amazing message about Jazz!");
 
         jmsMessageProducer.publish("Rock", "Rock-Title 1", "Some amazing message about Rock!");

@@ -14,6 +14,8 @@ import at.fhv.jazzers.shared.dto.LineDTO;
 import at.fhv.jazzers.shared.dto.SaleHistoryEntryDetailDTO;
 import at.fhv.jazzers.shared.dto.SaleHistoryEntryOverviewDTO;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +23,20 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Stateless
 public class SaleServiceImpl implements SaleService {
-    private final EntityManager entityManager;
-    private final RMI_CustomerService rmi_customerService;
-    private final CustomerRepository customerRepository;
-    private final ProductRepository productRepository;
-    private final SaleRepository saleRepository;
+    private EntityManager entityManager;
+    private RMI_CustomerService rmi_customerService;
+    @EJB
+    private CustomerRepository customerRepository;
+    @EJB
+    private ProductRepository productRepository;
+    @EJB
+    private SaleRepository saleRepository;
+
+    public SaleServiceImpl() {
+
+    }
 
     public SaleServiceImpl(EntityManager entityManager, RMI_CustomerService rmi_customerService, CustomerRepository customerRepository, ProductRepository productRepository, SaleRepository saleRepository) {
         this.entityManager = entityManager;
