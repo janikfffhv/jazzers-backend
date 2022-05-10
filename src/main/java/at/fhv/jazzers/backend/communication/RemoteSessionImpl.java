@@ -1,5 +1,6 @@
 package at.fhv.jazzers.backend.communication;
 
+import at.fhv.jazzers.backend.ServiceRegistry;
 import at.fhv.jazzers.backend.domain.model.employee.Employee;
 import at.fhv.jazzers.backend.domain.model.employee.EmployeeId;
 import at.fhv.jazzers.backend.domain.model.employee.Role;
@@ -41,16 +42,17 @@ public class RemoteSessionImpl implements RemoteSession {
     @Override
     public boolean authenticate(String username, String password) {
         if (!findInLdap(username, password)) {
-            return false;
+            throw new IllegalArgumentException("User does not exist in LDAP.");
         }
 
         Optional<Employee> employee = employeeRepository.byId(new EmployeeId(username));
 
         if (employee.isEmpty()) {
-            return false;
+            throw new IllegalArgumentException("User does not exist in POSTGRES.");
         }
 
         this.employee = employee.get();
+        this.rmi_customerService = ServiceRegistry.rmi_customerService();
         return true;
     }
 
