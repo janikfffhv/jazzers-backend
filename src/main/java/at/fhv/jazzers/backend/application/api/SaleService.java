@@ -4,9 +4,11 @@ import at.fhv.jazzers.shared.dto.LineDTO;
 import at.fhv.jazzers.shared.dto.SaleHistoryEntryDetailDTO;
 import at.fhv.jazzers.shared.dto.SaleHistoryEntryOverviewDTO;
 
+import javax.ejb.Local;
 import java.util.List;
 import java.util.UUID;
 
+@Local
 public interface SaleService {
     void purchase(UUID customerId, List<LineDTO> linesDTO);
 

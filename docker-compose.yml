@@ -14,16 +14,14 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      - POSTGRES_USER=${JAZZERS_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${JAZZERS_POSTGRES_PASSWORD}
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=bZ+XdvLx45M=
       - POSTGRES_DB=jazzersdb
     ports:
-      - ${JAZZERS_POSTGRES_PORT}:${JAZZERS_POSTGRES_PORT}
-    env_file:
-      - .env
-    command: -p ${JAZZERS_POSTGRES_PORT}
+      - "5434:5434"
+    command: -p 5434
     expose:
-      - ${JAZZERS_POSTGRES_PORT}
+      - 5434
   jazzersldap:
     container_name: jazzers-ldap
     image: osixia/openldap:latest
@@ -42,12 +40,13 @@ services:
       LDAP_PORT: "10389"
     volumes:
       - ./employees-for-ldap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/bootstrap-data.ldif
-  jazzersserver:
-    container_name: jazzers-server
+  jazzerswildfly:
+    container_name: jazzers-wildfly
     build: .
-    ports:
-      - ${JAZZERS_RMI_PORT}:${JAZZERS_RMI_PORT}
-    links:
+    depends_on:
+      - jazzersactivemq
       - jazzerspostgres
-    env_file:
-      - .env
+      - jazzersldap
+    ports:
+      - "9990:9990"
+      - "8080:8080"

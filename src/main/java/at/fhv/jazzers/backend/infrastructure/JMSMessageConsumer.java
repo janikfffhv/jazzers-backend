@@ -4,14 +4,20 @@ import at.fhv.jazzers.backend.ServiceRegistry;
 import at.fhv.jazzers.backend.domain.model.employee.Employee;
 import at.fhv.jazzers.backend.domain.model.work.Genre;
 
+import javax.ejb.Stateless;
 import javax.jms.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Stateless
 public class JMSMessageConsumer {
     private Connection connection;
     private Session session;
+
+    public JMSMessageConsumer() {
+        
+    }
 
     public void createDurableSubscribersFor(List<Employee> employees) {
         connectToMessagingService();

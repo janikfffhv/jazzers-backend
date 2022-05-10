@@ -22,8 +22,8 @@
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://jazzers-postgres:5434/jazzersdb"/>
-            <property name="javax.persistence.jdbc.user" value="*"/>
-            <property name="javax.persistence.jdbc.password" value="*"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="bZ+XdvLx45M="/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.format_sql" value="true"/>

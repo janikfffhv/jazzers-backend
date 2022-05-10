@@ -7,11 +7,13 @@ import at.fhv.jazzers.backend.domain.repository.CustomerRepository;
 import at.fhv.jazzers.shared.api.RMI_CustomerService;
 import at.fhv.jazzers.shared.dto.CustomerDetailDTO;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Stateless
 public class HibernateCustomerRepository implements CustomerRepository {
     private final EntityManager entityManager;
 

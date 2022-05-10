@@ -2,11 +2,19 @@ package at.fhv.jazzers.backend.infrastructure;
 
 import at.fhv.jazzers.backend.ServiceRegistry;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.jms.*;
 
+@LocalBean
+@Stateless
 public class JMSMessageProducer {
     private Connection connection;
     private Session session;
+
+    public JMSMessageProducer() {
+
+    }
 
     public void publish(String topic, String title, String message) {
         connectToMessagingService();

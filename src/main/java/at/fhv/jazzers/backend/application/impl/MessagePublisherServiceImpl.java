@@ -5,11 +5,16 @@ import at.fhv.jazzers.backend.application.api.MessagePublisherService;
 import at.fhv.jazzers.backend.domain.model.work.Genre;
 import at.fhv.jazzers.backend.infrastructure.JMSMessageProducer;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+@Stateless
 public class MessagePublisherServiceImpl implements MessagePublisherService {
-    JMSMessageProducer jmsMessageProducer;
+    @EJB
+    private JMSMessageProducer jmsMessageProducer;
 
     public MessagePublisherServiceImpl() {
-        jmsMessageProducer = ServiceRegistry.jmsMessageProducer();
+
     }
 
     @Override

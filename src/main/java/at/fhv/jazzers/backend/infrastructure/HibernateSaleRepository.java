@@ -7,10 +7,12 @@ import at.fhv.jazzers.backend.domain.model.sale.Sale;
 import at.fhv.jazzers.backend.domain.model.sale.SaleId;
 import at.fhv.jazzers.backend.domain.repository.SaleRepository;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
+@Stateless
 public class HibernateSaleRepository implements SaleRepository {
     private final EntityManager entityManager;
 
