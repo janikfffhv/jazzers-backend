@@ -3,6 +3,7 @@ package at.fhv.jazzers.backend.infrastructure;
 import at.fhv.jazzers.backend.ServiceRegistry;
 import at.fhv.jazzers.backend.domain.model.customer.Customer;
 import at.fhv.jazzers.backend.domain.model.customer.CustomerId;
+import at.fhv.jazzers.backend.domain.model.customer.Playlist;
 import at.fhv.jazzers.backend.domain.repository.CustomerRepository;
 import at.fhv.jazzers.shared.api.RMI_CustomerService;
 import at.fhv.jazzers.shared.dto.CustomerDetailDTO;
@@ -39,6 +40,17 @@ public class HibernateCustomerRepository implements CustomerRepository {
                 .getResultList()
                 .stream()
                 .findFirst();
+    }
+
+    @Override
+    public Optional<Playlist> collection(String username) {
+        return entityManager
+                .createQuery("SELECT c FROM Customer c WHERE c.username = :username", Customer.class)
+                .setParameter("username", username)
+                .getResultList()
+                .stream()
+                .findFirst()
+                .map(Customer::collection);
     }
 
     @Override
