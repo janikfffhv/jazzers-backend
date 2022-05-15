@@ -39,7 +39,7 @@ services:
       LDAP_TLS: "false"
       LDAP_PORT: "10389"
     volumes:
-      - ./employees-for-ldap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/bootstrap-data.ldif
+      - ./data-for-ldap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/bootstrap-data.ldif
   jazzerswildfly:
     container_name: jazzers-wildfly
     build: .

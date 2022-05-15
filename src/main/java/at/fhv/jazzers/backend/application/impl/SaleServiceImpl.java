@@ -1,8 +1,10 @@
 package at.fhv.jazzers.backend.application.impl;
 
+import at.fhv.jazzers.backend.ServiceRegistry;
 import at.fhv.jazzers.backend.application.api.SaleService;
 import at.fhv.jazzers.backend.domain.model.customer.Customer;
 import at.fhv.jazzers.backend.domain.model.customer.CustomerId;
+import at.fhv.jazzers.backend.domain.model.product.Product;
 import at.fhv.jazzers.backend.domain.model.product.ProductId;
 import at.fhv.jazzers.backend.domain.model.sale.*;
 import at.fhv.jazzers.backend.domain.repository.CustomerRepository;
@@ -25,7 +27,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 public class SaleServiceImpl implements SaleService {
-    private EntityManager entityManager;
+    private EntityManager entityManager = ServiceRegistry.entityManager();
     private RMI_CustomerService rmi_customerService;
     @EJB
     private CustomerRepository customerRepository;
@@ -44,6 +46,29 @@ public class SaleServiceImpl implements SaleService {
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
         this.saleRepository = saleRepository;
+    }
+
+    @Override
+    public void customerPurchase(String username, UUID productId) {
+        Optional<Customer> customer = customerRepository.byUsername(username);
+
+        if (customer.isEmpty()) {
+            throw new IllegalStateException("Customer does not exist in database");
+        }
+
+        Optional<Product> product = productRepository.byId(new ProductId(productId));
+
+        if (product.isEmpty()) {
+            throw new IllegalStateException("Product does not exist in database");
+        }
+
+        Sale sale = Sale.create(new SaleId(UUID.randomUUID()), List.of(new Line(new LineId(UUID.randomUUID()), 1, 0, product.get())), customer.get());
+
+        entityManager.getTransaction().begin();
+        sale.lines().forEach(line -> line.product().takeFromStock(line.amountPurchased()));
+        customer.get().addProductToCollection(product.get());
+        saleRepository.save(sale);
+        entityManager.getTransaction().commit();
     }
 
     @Override
@@ -104,7 +129,7 @@ public class SaleServiceImpl implements SaleService {
 
         if (externCustomer != null && internCustomer.isEmpty()) {
             entityManager.getTransaction().begin();
-            customerRepository.save(new Customer(new CustomerId(customerId), List.of(), List.of()));
+            customerRepository.save(new Customer(new CustomerId(customerId), List.of()));
             entityManager.getTransaction().commit();
         }
     }

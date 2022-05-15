@@ -9,5 +9,6 @@ import java.util.Optional;
 @Local
 public interface CustomerRepository {
     Optional<Customer> byId(CustomerId customerId);
+    Optional<Customer> byUsername(String username);
     void save(Customer customer);
 }

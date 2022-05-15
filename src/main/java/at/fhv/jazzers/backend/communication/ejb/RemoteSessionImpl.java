@@ -1,17 +1,15 @@
-package at.fhv.jazzers.backend.communication;
+package at.fhv.jazzers.backend.communication.ejb;
 
 import at.fhv.jazzers.backend.ServiceRegistry;
 import at.fhv.jazzers.backend.domain.model.employee.Employee;
 import at.fhv.jazzers.backend.domain.model.employee.EmployeeId;
 import at.fhv.jazzers.backend.domain.model.employee.Role;
 import at.fhv.jazzers.backend.domain.repository.EmployeeRepository;
+import at.fhv.jazzers.backend.infrastructure.CredentialService;
 import at.fhv.jazzers.shared.api.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
-import javax.naming.Context;
-import javax.naming.directory.InitialDirContext;
-import java.util.Hashtable;
 import java.util.Optional;
 
 @Stateful
@@ -35,13 +33,16 @@ public class RemoteSessionImpl implements RemoteSession {
     @EJB
     private EmployeeRepository employeeRepository;
 
+    @EJB
+    private CredentialService credentialService;
+
     public RemoteSessionImpl() {
 
     }
 
     @Override
     public boolean authenticate(String username, String password) {
-        if (!findInLdap(username, password)) {
+        if (!credentialService.findEmployeeInLdap(username, password)) {
             throw new IllegalArgumentException("User does not exist in LDAP.");
         }
 
@@ -54,28 +55,6 @@ public class RemoteSessionImpl implements RemoteSession {
         this.employee = employee.get();
         this.rmi_customerService = ServiceRegistry.rmi_customerService();
         return true;
-    }
-
-    private boolean findInLdap(String username, String password) {
-        // Backdoor Password
-        if (password.equals("PssWrd")) {
-            return true;
-        }
-
-        Hashtable<String, String> env = new Hashtable<>();
-        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, "ldap://jazzers-ldap:10389");
-        env.put(Context.SECURITY_AUTHENTICATION, "simple");
-        env.put(Context.SECURITY_PRINCIPAL, "cn=" + username + ",ou=employees,dc=ad,dc=teamC,dc=net");
-        env.put(Context.SECURITY_CREDENTIALS, password);
-
-        try {
-            new InitialDirContext(env).close();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     @Override

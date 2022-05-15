@@ -1,9 +1,12 @@
 package at.fhv.jazzers.backend.domain.model.customer;
 
+import at.fhv.jazzers.backend.domain.model.product.Product;
 import at.fhv.jazzers.backend.domain.model.sale.Sale;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Customer {
@@ -15,11 +18,13 @@ public class Customer {
     @Embedded
     private CustomerId customerId;
 
+    private String username;
+
     @OneToMany
     private List<Sale> sales;
 
-    @OneToMany
-    private List<Playlist> playlists;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Playlist collection;
 
 
 
@@ -28,16 +33,25 @@ public class Customer {
 
     }
 
-    public Customer(CustomerId customerId, List<Sale> sales, List<Playlist> playlists) {
+    public Customer(String username) {
+        this.customerId = new CustomerId(UUID.randomUUID());
+        this.username = username;
+        this.sales = new ArrayList<>();
+        this.collection = new Playlist(new PlaylistId(UUID.randomUUID()), "Collection", new ArrayList<>());
+    }
+
+    public Customer(CustomerId customerId, List<Sale> sales) {
         this.customerId = customerId;
         this.sales = sales;
-        this.playlists = playlists;
+        this.collection = new Playlist(new PlaylistId(UUID.randomUUID()), "Collection", new ArrayList<>());
     }
 
 
 
     // Domain Methods
-    // -
+    public void addProductToCollection(Product product) {
+        collection.addProduct(product);
+    }
 
 
 
@@ -46,11 +60,15 @@ public class Customer {
         return customerId;
     }
 
+    public String username() {
+        return username;
+    }
+
     public List<Sale> sales() {
         return List.copyOf(sales);
     }
 
-    public List<Playlist> playlists() {
-        return List.copyOf(playlists);
+    public Playlist collection() {
+        return collection;
     }
 }

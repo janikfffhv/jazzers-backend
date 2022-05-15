@@ -32,6 +32,16 @@ public class HibernateCustomerRepository implements CustomerRepository {
     }
 
     @Override
+    public Optional<Customer> byUsername(String username) {
+        return entityManager
+                .createQuery("SELECT c FROM Customer c WHERE c.username = :username", Customer.class)
+                .setParameter("username", username)
+                .getResultList()
+                .stream()
+                .findFirst();
+    }
+
+    @Override
     public void save(Customer customer) {
         entityManager.persist(customer);
     }
