@@ -15,7 +15,7 @@ public class CredentialService {
 
         Hashtable<String, String> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, "ldap://10.0.40.165:10389");
+        env.put(Context.PROVIDER_URL, "ldap://jazzers-ldap:10389");
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
         env.put(Context.SECURITY_PRINCIPAL, "cn=" + username + ",ou=employees,dc=ad,dc=teamC,dc=net");
         env.put(Context.SECURITY_CREDENTIALS, password);
@@ -37,7 +37,7 @@ public class CredentialService {
 
         Hashtable<String, String> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, "ldap://10.0.40.165:10389");
+        env.put(Context.PROVIDER_URL, "ldap://jazzers-ldap:10389");
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
         env.put(Context.SECURITY_PRINCIPAL, "cn=" + username + ",ou=customers,dc=ad,dc=teamC,dc=net");
         env.put(Context.SECURITY_CREDENTIALS, password);
