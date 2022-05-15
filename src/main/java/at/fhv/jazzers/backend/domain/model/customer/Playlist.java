@@ -1,6 +1,6 @@
 package at.fhv.jazzers.backend.domain.model.customer;
 
-import at.fhv.jazzers.backend.domain.model.work.Work;
+import at.fhv.jazzers.backend.domain.model.product.Product;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,8 +17,8 @@ public class Playlist {
 
     private String name;
 
-    @ManyToMany()
-    private List<Work> works;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Product> products;
 
 
 
@@ -27,16 +27,27 @@ public class Playlist {
 
     }
 
-    public Playlist(PlaylistId playlistId, String name, Customer customer, List<Work> works) {
+    public Playlist(PlaylistId playlistId, String name, List<Product> products) {
         this.playlistId = playlistId;
         this.name = name;
-        this.works = works;
+        this.products = products;
     }
 
 
 
     // Domain Methods
-    // -
+    public void addProduct(Product product) {
+        if (products.contains(product)) {
+            if (name.equals("Collection")) {
+                throw new IllegalStateException("Customer already owns this product");
+            }
+            else {
+                throw new IllegalStateException("Product already in collection");
+            }
+        }
+
+        products.add(product);
+    }
 
 
 
@@ -49,7 +60,7 @@ public class Playlist {
         return name;
     }
 
-    public List<Work> works() {
-        return List.copyOf(works);
+    public List<Product> products() {
+        return List.copyOf(products);
     }
 }

@@ -1,4 +1,4 @@
-package at.fhv.jazzers.backend.communication;
+package at.fhv.jazzers.backend.communication.ejb;
 
 import at.fhv.jazzers.backend.ServiceRegistry;
 import at.fhv.jazzers.shared.api.RMI_CustomerService;

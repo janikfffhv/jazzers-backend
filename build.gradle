@@ -37,6 +37,10 @@ dependencies {
     implementation 'javax.ejb:javax.ejb-api:3.2.2'
     // Contexts and Dependency Injection
     implementation 'javax.enterprise:cdi-api:2.0.SP1'
+    // JAX-RS
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.0'
+    // OpenAPI (for OAS - might be optional)
+    implementation 'org.eclipse.microprofile.openapi:microprofile-openapi-api:3.0'
 
     // H2
     testImplementation 'com.h2database:h2:2.1.210'

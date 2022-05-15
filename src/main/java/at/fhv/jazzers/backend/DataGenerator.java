@@ -56,6 +56,16 @@ public class DataGenerator {
     }
 
     private void generateData() {
+        Customer customer1 = new Customer("aar9086");
+        Customer customer2 = new Customer("ace9467");
+        Customer customer3 = new Customer("bte3268");
+        Customer customer4 = new Customer("cpe2877");
+        Customer customer5 = new Customer("eha7244");
+        Customer customer6 = new Customer("jfu5402");
+        Customer customer7 = new Customer("ppl8596");
+        Customer customer8 = new Customer("tf-test");
+        customers.addAll(List.of(customer1, customer2, customer3, customer4, customer5, customer6, customer7, customer8));
+
         List<Role> allRoles = Arrays.stream(Role.values()).collect(Collectors.toList());
         List<Genre> allTopics = Arrays.stream(Genre.values()).collect(Collectors.toList());
 
@@ -71,12 +81,6 @@ public class DataGenerator {
         Employee employee10 = new Employee(new EmployeeId("roles-operator"), List.of(Role.OPERATOR), List.of());
         Employee employee11 = new Employee(new EmployeeId("roles-standard-and-operator"), allRoles, List.of());
         employees.addAll(List.of(employee1, employee2, employee3, employee4, employee5, employee6, employee7, employee8, employee9, employee10, employee11));
-
-        Customer customer1 = new Customer(new CustomerId(UUID.randomUUID()), List.of(), List.of());
-        Customer customer2 = new Customer(new CustomerId(UUID.randomUUID()), List.of(), List.of());
-        Customer customer3 = new Customer(new CustomerId(UUID.randomUUID()), List.of(), List.of());
-        Customer customer4 = new Customer(new CustomerId(UUID.randomUUID()), List.of(), List.of());
-        customers.addAll(List.of(customer1, customer2, customer3, customer4));
 
         Supplier supplier1 = new Supplier("Supplier 1");
         Supplier supplier2 = new Supplier("Supplier 2");

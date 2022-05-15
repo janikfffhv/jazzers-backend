@@ -1,4 +1,4 @@
-package at.fhv.jazzers.backend.communication;
+package at.fhv.jazzers.backend.communication.ejb;
 
 import at.fhv.jazzers.backend.application.api.SaleService;
 import at.fhv.jazzers.shared.api.RemoteSaleService;
