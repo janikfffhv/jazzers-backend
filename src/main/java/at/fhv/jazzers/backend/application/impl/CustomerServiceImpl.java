@@ -3,6 +3,8 @@ package at.fhv.jazzers.backend.application.impl;
 import at.fhv.jazzers.backend.application.api.CustomerService;
 import at.fhv.jazzers.backend.domain.model.product.Medium;
 import at.fhv.jazzers.backend.domain.repository.CustomerRepository;
+import at.fhv.jazzers.shared.dto.CustomerAccountDTO;
+import at.fhv.jazzers.shared.dto.DigitalProductDTO;
 import at.fhv.jazzers.shared.dto.ProductOverviewDTO;
 
 import javax.ejb.EJB;
@@ -20,7 +22,30 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<ProductOverviewDTO> collection(String username) {
-        return customerRepository.collection(username).orElseThrow().products().stream().map(product -> new ProductOverviewDTO(product.productId().id(), product.interpret().name(), product.title(), Medium.MP3.getName(), 0, product.price())).collect(Collectors.toList());
+    public CustomerAccountDTO accountInfo(String username) {
+        return customerRepository
+                .byUsername(username)
+                .map(customer -> new CustomerAccountDTO(
+                        customer.customerId().id(),
+                        customer.firstName(),
+                        customer.lastName(),
+                        customer.iban()))
+                .orElseThrow();
+    }
+
+    @Override
+    public List<DigitalProductDTO> collection(String username) {
+        return customerRepository
+                .collection(username).orElseThrow()
+                .products()
+                .stream()
+                .map(product -> new DigitalProductDTO(
+                    product.productId().id(),
+                    product.title(),
+                    product.interpret().name(),
+                    product.medium().getName(),
+                    product.works().get(0).genre().getName(),
+                    product.price()))
+                .collect(Collectors.toList());
     }
 }

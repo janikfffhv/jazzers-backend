@@ -20,6 +20,12 @@ public class Customer {
 
     private String username;
 
+    private String firstName;
+
+    private String lastName;
+
+    private String iban;
+
     @OneToMany
     private List<Sale> sales;
 
@@ -33,15 +39,22 @@ public class Customer {
 
     }
 
-    public Customer(String username) {
+    public Customer(String username, String firstName, String lastName, String iban) {
         this.customerId = new CustomerId(UUID.randomUUID());
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.iban = iban;
         this.sales = new ArrayList<>();
         this.collection = new Playlist(new PlaylistId(UUID.randomUUID()), "Collection", new ArrayList<>());
     }
 
     public Customer(CustomerId customerId, List<Sale> sales) {
         this.customerId = customerId;
+        this.username = "";
+        this.firstName = "";
+        this.lastName = "";
+        this.iban = "";
         this.sales = sales;
         this.collection = new Playlist(new PlaylistId(UUID.randomUUID()), "Collection", new ArrayList<>());
     }
@@ -62,6 +75,18 @@ public class Customer {
 
     public String username() {
         return username;
+    }
+
+    public String firstName() {
+        return firstName;
+    }
+
+    public String lastName() {
+        return lastName;
+    }
+
+    public String iban() {
+        return iban;
     }
 
     public List<Sale> sales() {

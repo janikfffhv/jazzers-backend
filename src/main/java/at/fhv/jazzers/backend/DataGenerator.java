@@ -1,7 +1,6 @@
 package at.fhv.jazzers.backend;
 
 import at.fhv.jazzers.backend.domain.model.customer.Customer;
-import at.fhv.jazzers.backend.domain.model.customer.CustomerId;
 import at.fhv.jazzers.backend.domain.model.customer.Playlist;
 import at.fhv.jazzers.backend.domain.model.employee.Employee;
 import at.fhv.jazzers.backend.domain.model.employee.EmployeeId;
@@ -41,7 +40,8 @@ public class DataGenerator {
     private final List<Employee> employees = new ArrayList<>();
     private final List<Interpret> interprets = new ArrayList<>();
     private final List<Label> labels = new ArrayList<>();
-    private final List<Product> products = new ArrayList<>();
+    private final List<Product> productsAnalog = new ArrayList<>();
+    private final List<Product> productsDigital = new ArrayList<>();
     private final List<Supplier> suppliers = new ArrayList<>();
     private final List<Line> lines = new ArrayList<>();
     private final List<Sale> sales = new ArrayList<>();
@@ -56,14 +56,14 @@ public class DataGenerator {
     }
 
     private void generateData() {
-        Customer customer1 = new Customer("aar9086");
-        Customer customer2 = new Customer("ace9467");
-        Customer customer3 = new Customer("bte3268");
-        Customer customer4 = new Customer("cpe2877");
-        Customer customer5 = new Customer("eha7244");
-        Customer customer6 = new Customer("jfu5402");
-        Customer customer7 = new Customer("ppl8596");
-        Customer customer8 = new Customer("tf-test");
+        Customer customer1 = new Customer("aar9086", "Alp", "Arslan", "AT001111222233334444");       // AT00 1111 2222 3333 4444
+        Customer customer2 = new Customer("ace9467", "Ajdin", "Celes", "AT001111222233334444");
+        Customer customer3 = new Customer("bte3268", "Barbaros", "Teker", "AT001111222233334444");
+        Customer customer4 = new Customer("cpe2877", "Christoph", "Perc", "AT001111222233334444");
+        Customer customer5 = new Customer("eha7244", "Elias", "Hartmann", "AT001111222233334444");
+        Customer customer6 = new Customer("jfu5402", "Janik", "Fuchsberger", "AT001111222233334444");
+        Customer customer7 = new Customer("ppl8596", "Philip", "Pleterski", "AT001111222233334444");
+        Customer customer8 = new Customer("tf-test", "Thomas", "Feilhauer", "AT001111222233334444");
         customers.addAll(List.of(customer1, customer2, customer3, customer4, customer5, customer6, customer7, customer8));
 
         List<Role> allRoles = Arrays.stream(Role.values()).collect(Collectors.toList());
@@ -126,8 +126,28 @@ public class DataGenerator {
         Product meteoraVinyl = new Product(new ProductId(UUID.randomUUID()), "Meteora", linkinPark, 2003, 14.99d, 12, Medium.VINYL, warnerBrothersRecords, List.of(supplier1, supplier2), meteoraWorks);
         Product meteoraCD = new Product(new ProductId(UUID.randomUUID()), "Meteora", linkinPark, 2005, 9.99d, 33, Medium.CD, warnerBrothersRecords, List.of(supplier2, supplier3), meteoraWorks);
         Product humanityCD = new Product(new ProductId(UUID.randomUUID()), "Humanity", bleedFromWithin, 2009, 19.99d, 2, Medium.CD, risingRecords, List.of(supplier3, supplier4), humanityWorks);
-        Product humanityMP3 = new Product(new ProductId(UUID.randomUUID()), "Humanity", bleedFromWithin, 2009, 19.99d, 0, Medium.MP3, risingRecords, List.of(), humanityWorks);
-        products.addAll(List.of(kindOfBlueVinyl, meteoraVinyl, meteoraCD, humanityCD, humanityMP3));
+        productsAnalog.addAll(List.of(kindOfBlueVinyl, meteoraVinyl, meteoraCD, humanityCD));
+
+        Product soWhatMP3            = new Product(new ProductId(UUID.randomUUID()), "So What",            milesDavis, 1959, 3.99d, 0, Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue1));
+        Product freddiefreeloaderMP3 = new Product(new ProductId(UUID.randomUUID()), "Freddie Freeloader", milesDavis, 1959, 3.99d, 0, Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue2));
+        Product blueInGreenMP3       = new Product(new ProductId(UUID.randomUUID()), "Blue in Green",      milesDavis, 1959, 4.99d, 0, Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue3));
+        Product allBluesMP3          = new Product(new ProductId(UUID.randomUUID()), "All Blues",          milesDavis, 1959, 4.99d, 0, Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue4));
+        Product flamencoSketchesMP3  = new Product(new ProductId(UUID.randomUUID()), "Flamenco Sketches",  milesDavis, 1959, 4.99d, 0, Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue5));
+        productsDigital.addAll(List.of(soWhatMP3, freddiefreeloaderMP3, blueInGreenMP3, allBluesMP3, flamencoSketchesMP3));
+
+        Product dontStayMP3         = new Product(new ProductId(UUID.randomUUID()), "Don't Stay",         linkinPark, 2003, 6.99d, 0, Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora1));
+        Product somewhereIBelongMP3 = new Product(new ProductId(UUID.randomUUID()), "Somewhere I belong", linkinPark, 2003, 6.99d, 0, Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora2));
+        Product lyingFromYouMP3     = new Product(new ProductId(UUID.randomUUID()), "Lying from You",     linkinPark, 2003, 6.99d, 0, Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora3));
+        Product hitTheFloorMP3      = new Product(new ProductId(UUID.randomUUID()), "Hit the Floor",      linkinPark, 2003, 6.99d, 0, Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora4));
+        Product easierToRunMP3      = new Product(new ProductId(UUID.randomUUID()), "Easier to Run",      linkinPark, 2003, 7.99d, 0, Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora5));
+        productsDigital.addAll(List.of(dontStayMP3, somewhereIBelongMP3, lyingFromYouMP3, hitTheFloorMP3, easierToRunMP3));
+
+        Product theAwakeningMP3 = new Product(new ProductId(UUID.randomUUID()), "The Awakening",   bleedFromWithin, 2009, 4.99d, 0, Medium.MP3, risingRecords, List.of(), List.of(humanity1));
+        Product damnationMP3    = new Product(new ProductId(UUID.randomUUID()), "Damnation",       bleedFromWithin, 2009, 4.99d, 0, Medium.MP3, risingRecords, List.of(), List.of(humanity2));
+        Product messiahMP3      = new Product(new ProductId(UUID.randomUUID()), "Messiah",         bleedFromWithin, 2009, 5.99d, 0, Medium.MP3, risingRecords, List.of(), List.of(humanity3));
+        Product theFallOfManMP3 = new Product(new ProductId(UUID.randomUUID()), "The Fall of Man", bleedFromWithin, 2009, 5.99d, 0, Medium.MP3, risingRecords, List.of(), List.of(humanity4));
+        Product monsterMP3      = new Product(new ProductId(UUID.randomUUID()), "Monster",         bleedFromWithin, 2009, 5.99d, 0, Medium.MP3, risingRecords, List.of(), List.of(humanity5));
+        productsDigital.addAll(List.of(theAwakeningMP3, damnationMP3, messiahMP3, theFallOfManMP3, monsterMP3));
     }
 
     private void persistData() {
@@ -140,7 +160,8 @@ public class DataGenerator {
         employees.forEach(em::persist);
 
         labels.forEach(em::persist);
-        products.forEach(em::persist);
+        productsAnalog.forEach(em::persist);
+        productsDigital.forEach(em::persist);
         suppliers.forEach(em::persist);
 
         lines.forEach(em::persist);

@@ -2,6 +2,7 @@ package at.fhv.jazzers.backend.communication.rest;
 
 import at.fhv.jazzers.backend.application.api.ProductService;
 import at.fhv.jazzers.backend.infrastructure.CredentialService;
+import at.fhv.jazzers.shared.dto.DigitalProductDTO;
 import at.fhv.jazzers.shared.dto.ProductOverviewDTO;
 
 import javax.ejb.EJB;
@@ -25,7 +26,7 @@ public class ProductController {
         boolean customerExistsInLDAP = credentialService.findCustomerInLdap(username, password);
 
         if (customerExistsInLDAP) {
-            List<ProductOverviewDTO> matchingProducts = productService.searchDigital(titleOrInterpret);
+            List<DigitalProductDTO> matchingProducts = productService.searchDigital(titleOrInterpret);
             return Response.status(Response.Status.OK).entity(matchingProducts).build();
         }
         else {

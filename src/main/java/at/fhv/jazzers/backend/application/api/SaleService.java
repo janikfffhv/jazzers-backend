@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Local
 public interface SaleService {
-    void customerPurchase(String username, UUID productId);
+    void customerPurchase(String username, UUID productId, String iban);
 
     void purchase(UUID customerId, List<LineDTO> linesDTO);
 

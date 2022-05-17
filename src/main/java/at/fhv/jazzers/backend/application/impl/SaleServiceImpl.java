@@ -49,11 +49,15 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public void customerPurchase(String username, UUID productId) {
+    public void customerPurchase(String username, UUID productId, String iban) {
         Optional<Customer> customer = customerRepository.byUsername(username);
 
         if (customer.isEmpty()) {
             throw new IllegalStateException("Customer does not exist in database");
+        }
+
+        if (!customer.get().iban().equalsIgnoreCase(iban)) {
+            throw new IllegalArgumentException("The provided iban does not match the stored iban");
         }
 
         Optional<Product> product = productRepository.byId(new ProductId(productId));

@@ -2,6 +2,7 @@ package at.fhv.jazzers.backend.communication.ejb;
 
 import at.fhv.jazzers.backend.application.api.ProductService;
 import at.fhv.jazzers.shared.api.RemoteProductService;
+import at.fhv.jazzers.shared.dto.DigitalProductDTO;
 import at.fhv.jazzers.shared.dto.ProductOverviewDTO;
 
 import javax.ejb.EJB;
@@ -23,7 +24,7 @@ public class RemoteProductServiceImpl implements RemoteProductService {
     }
 
     @Override
-    public List<ProductOverviewDTO> searchDigital(String titleOrInterpret) {
+    public List<DigitalProductDTO> searchDigital(String titleOrInterpret) {
         return productService.searchDigital(titleOrInterpret);
     }
 }

@@ -2,7 +2,9 @@ package at.fhv.jazzers.backend.application.impl;
 
 import at.fhv.jazzers.backend.application.api.ProductService;
 import at.fhv.jazzers.backend.domain.model.product.Medium;
+import at.fhv.jazzers.backend.domain.model.product.Product;
 import at.fhv.jazzers.backend.domain.repository.ProductRepository;
+import at.fhv.jazzers.shared.dto.DigitalProductDTO;
 import at.fhv.jazzers.shared.dto.ProductOverviewDTO;
 
 import javax.ejb.EJB;
@@ -27,22 +29,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductOverviewDTO> searchAnalog(String titleOrInterpret) {
         return search(titleOrInterpret)
                 .stream()
-                .filter(product -> !product.getMedium().equals(Medium.MP3.getName()))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ProductOverviewDTO> searchDigital(String titleOrInterpret) {
-        return search(titleOrInterpret)
-                .stream()
-                .filter(product -> product.getMedium().equals(Medium.MP3.getName()))
-                .collect(Collectors.toList());
-    }
-
-    private List<ProductOverviewDTO> search(String titleOrInterpret) {
-        return productRepository
-                .search(titleOrInterpret)
-                .stream()
+                .filter(product -> !product.medium().equals(Medium.MP3))
                 .map(product -> new ProductOverviewDTO(
                         product.productId().id(),
                         product.interpret().name(),
@@ -51,5 +38,25 @@ public class ProductServiceImpl implements ProductService {
                         product.stock(),
                         product.price()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DigitalProductDTO> searchDigital(String titleOrInterpret) {
+        return search(titleOrInterpret)
+                .stream()
+                .filter(product -> product.medium().equals(Medium.MP3))
+                .map(product -> new DigitalProductDTO(
+                        product.productId().id(),
+                        product.title(),
+                        product.interpret().name(),
+                        product.medium().getName(),
+                        product.works().get(0).genre().getName(),
+                        product.price()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    private List<Product> search(String titleOrInterpret) {
+        return productRepository.search(titleOrInterpret);
     }
 }

@@ -20,11 +20,11 @@ public class SaleController {
     @GET
     @Path("/customerPurchase")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response customerPurchase(@QueryParam("username") @DefaultValue("") String username, @QueryParam("password") @DefaultValue("") String password, @QueryParam("productId") @DefaultValue("") String productId) {
+    public Response customerPurchase(@QueryParam("username") @DefaultValue("") String username, @QueryParam("password") @DefaultValue("") String password, @QueryParam("productId") @DefaultValue("") String productId, @QueryParam("iban") @DefaultValue("") String iban) {
         boolean customerExistsInLDAP = credentialService.findCustomerInLdap(username, password);
 
         if (customerExistsInLDAP) {
-            saleService.customerPurchase(username, UUID.fromString(productId));
+            saleService.customerPurchase(username, UUID.fromString(productId), iban);
             return Response.status(Response.Status.OK).build();
         }
         else {
