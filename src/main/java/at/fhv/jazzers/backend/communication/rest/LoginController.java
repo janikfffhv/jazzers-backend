@@ -20,7 +20,7 @@ public class LoginController {
     @GET
     @Path("/customer")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchDigital(@QueryParam("username") @DefaultValue("") String username, @QueryParam("password") @DefaultValue("") String password) {
+    public Response login(@QueryParam("username") @DefaultValue("") String username, @QueryParam("password") @DefaultValue("") String password) {
         boolean loginSuccessful = credentialService.findCustomerInLdap(username, password);
 
         if (loginSuccessful) {

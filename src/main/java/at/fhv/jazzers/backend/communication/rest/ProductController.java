@@ -22,15 +22,8 @@ public class ProductController {
     @GET
     @Path("/searchDigital")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchDigital(@QueryParam("username") @DefaultValue("") String username, @QueryParam("password") @DefaultValue("") String password, @QueryParam("titleOrInterpret") @DefaultValue("") String titleOrInterpret) {
-        boolean customerExistsInLDAP = credentialService.findCustomerInLdap(username, password);
-
-        if (customerExistsInLDAP) {
-            List<DigitalProductDTO> matchingProducts = productService.searchDigital(titleOrInterpret);
-            return Response.status(Response.Status.OK).entity(matchingProducts).build();
-        }
-        else {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
+    public Response searchDigital(@QueryParam("titleOrInterpret") @DefaultValue("") String titleOrInterpret) {
+        List<DigitalProductDTO> matchingProducts = productService.searchDigital(titleOrInterpret);
+        return Response.status(Response.Status.OK).entity(matchingProducts).build();
     }
 }
