@@ -39,6 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .collection(username).orElseThrow()
                 .products()
                 .stream()
+                .filter(product -> product.medium().equals(Medium.MP3))
                 .map(product -> new DigitalProductDTO(
                     product.productId().id(),
                     product.title(),

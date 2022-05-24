@@ -27,6 +27,8 @@ public class Product {
 
     private int stock;
 
+    private String downloadLink;
+
     @Enumerated(EnumType.STRING)
     private Medium medium;
 
@@ -46,13 +48,14 @@ public class Product {
 
     }
 
-    public Product(ProductId productId, String title, Interpret interpret, int releaseYear, double price, int stock, Medium medium, Label label, List<Supplier> supplier, List<Work> works) {
+    public Product(ProductId productId, String title, Interpret interpret, int releaseYear, double price, int stock, String downloadLink, Medium medium, Label label, List<Supplier> supplier, List<Work> works) {
         this.productId = productId;
         this.title = title;
         this.interpret = interpret;
         this.releaseYear = releaseYear;
         this.price = price;
         this.stock = stock;
+        this.downloadLink = downloadLink;
         this.medium = medium;
         this.label = label;
         this.supplier = supplier;
@@ -103,6 +106,10 @@ public class Product {
 
     public int stock() {
         return stock;
+    }
+
+    public String downloadLink() {
+        return downloadLink;
     }
 
     public Medium medium() {
