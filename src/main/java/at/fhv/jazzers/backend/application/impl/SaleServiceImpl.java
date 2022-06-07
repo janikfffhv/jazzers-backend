@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Stateless
 public class SaleServiceImpl implements SaleService {
     private EntityManager entityManager = ServiceRegistry.entityManager();
-    private RMI_CustomerService rmi_customerService;
+    private RMI_CustomerService rmi_customerService = ServiceRegistry.rmi_customerService();
     @EJB
     private CustomerRepository customerRepository;
     @EJB
@@ -127,8 +127,8 @@ public class SaleServiceImpl implements SaleService {
         try {
             externCustomer = rmi_customerService.searchById(customerId);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalStateException("Jazzers-Backend is unable to use customer service. There may be a problem due to RMI.");
+            // Abort when customer is not found or RMI has connection problems
+            return;
         }
 
         if (externCustomer != null && internCustomer.isEmpty()) {
@@ -158,6 +158,7 @@ public class SaleServiceImpl implements SaleService {
                 salesDTO.add(saleDTO);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new IllegalStateException("Jazzers-Backend is unable to use customer service. There may be a problem due to RMI.");
         }
 
@@ -188,6 +189,7 @@ public class SaleServiceImpl implements SaleService {
                 CustomerDetailDTO customerDTO = rmi_customerService.searchById(customerId);
                 return new SaleHistoryEntryDetailDTO(customerId, customerDTO.getFirstName(), customerDTO.getLastName(), customerDTO.getAddressDTO(), saleId, sale.get().saleDate(), sale.get().lines().stream().map(line -> new LineDTO(line.lineId().id(), line.product().productId().id(), line.product().title(), line.product().price(), line.amountPurchased(), line.amountRefunded())).collect(Collectors.toList()));
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new IllegalStateException("Jazzers-Backend is unable to use customer service. There may be a problem due to RMI.");
             }
         }
