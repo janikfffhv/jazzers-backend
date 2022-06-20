@@ -54,7 +54,8 @@ public class ProductServiceImpl implements ProductService {
                         product.interpret().name(),
                         product.medium().getName(),
                         product.works().get(0).genre().getName(),
-                        product.price()
+                        product.price(),
+                        product.downloadLink()
                 ))
                 .collect(Collectors.toList());
     }

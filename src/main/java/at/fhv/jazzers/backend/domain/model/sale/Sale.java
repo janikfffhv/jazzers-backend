@@ -56,6 +56,8 @@ public class Sale {
     public void updateRefunds(List<Line> newLines) {
         for (Line line : this.lines) {
             for (Line newLine : newLines) {
+                System.out.println("Old line: " + line.lineId().id());
+                System.out.println("New Line: " + newLine.lineId().id());
                 if (line.lineId().equals(newLine.lineId())) {
                     line.updateAmountRefunded(newLine.amountRefunded());
                 }

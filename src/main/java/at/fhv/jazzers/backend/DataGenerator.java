@@ -128,25 +128,25 @@ public class DataGenerator {
         Product humanityCD = new Product(new ProductId(UUID.randomUUID()), "Humanity", bleedFromWithin, 2009, 19.99d, 2, "", Medium.CD, risingRecords, List.of(supplier3, supplier4), humanityWorks);
         productsAnalog.addAll(List.of(kindOfBlueVinyl, meteoraVinyl, meteoraCD, humanityCD));
 
-        Product soWhatMP3            = new Product(new ProductId(UUID.randomUUID()), "So What",            milesDavis, 1959, 3.99d, 0, "x", Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue1));
-        Product freddiefreeloaderMP3 = new Product(new ProductId(UUID.randomUUID()), "Freddie Freeloader", milesDavis, 1959, 3.99d, 0, "x", Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue2));
-        Product blueInGreenMP3       = new Product(new ProductId(UUID.randomUUID()), "Blue in Green",      milesDavis, 1959, 4.99d, 0, "x", Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue3));
-        Product allBluesMP3          = new Product(new ProductId(UUID.randomUUID()), "All Blues",          milesDavis, 1959, 4.99d, 0, "x", Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue4));
-        Product flamencoSketchesMP3  = new Product(new ProductId(UUID.randomUUID()), "Flamenco Sketches",  milesDavis, 1959, 4.99d, 0, "x", Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue5));
+        Product soWhatMP3            = new Product(new ProductId(UUID.randomUUID()), "So What",            milesDavis, 1959, 3.99d, 0, "msm", Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue1));
+        Product freddiefreeloaderMP3 = new Product(new ProductId(UUID.randomUUID()), "Freddie Freeloader", milesDavis, 1959, 3.99d, 0, "msm", Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue2));
+        Product blueInGreenMP3       = new Product(new ProductId(UUID.randomUUID()), "Blue in Green",      milesDavis, 1959, 4.99d, 0, "msm", Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue3));
+        Product allBluesMP3          = new Product(new ProductId(UUID.randomUUID()), "All Blues",          milesDavis, 1959, 4.99d, 0, "msm", Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue4));
+        Product flamencoSketchesMP3  = new Product(new ProductId(UUID.randomUUID()), "Flamenco Sketches",  milesDavis, 1959, 4.99d, 0, "msm", Medium.MP3, columbiaRecords, List.of(), List.of(kindOfBlue5));
         productsDigital.addAll(List.of(soWhatMP3, freddiefreeloaderMP3, blueInGreenMP3, allBluesMP3, flamencoSketchesMP3));
 
-        Product dontStayMP3         = new Product(new ProductId(UUID.randomUUID()), "Don't Stay",         linkinPark, 2003, 6.99d, 0, "x", Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora1));
-        Product somewhereIBelongMP3 = new Product(new ProductId(UUID.randomUUID()), "Somewhere I belong", linkinPark, 2003, 6.99d, 0, "x", Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora2));
-        Product lyingFromYouMP3     = new Product(new ProductId(UUID.randomUUID()), "Lying from You",     linkinPark, 2003, 6.99d, 0, "x", Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora3));
-        Product hitTheFloorMP3      = new Product(new ProductId(UUID.randomUUID()), "Hit the Floor",      linkinPark, 2003, 6.99d, 0, "x", Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora4));
-        Product easierToRunMP3      = new Product(new ProductId(UUID.randomUUID()), "Easier to Run",      linkinPark, 2003, 7.99d, 0, "x", Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora5));
+        Product dontStayMP3         = new Product(new ProductId(UUID.randomUUID()), "Don't Stay",         linkinPark, 2003, 6.99d, 0, "msm", Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora1));
+        Product somewhereIBelongMP3 = new Product(new ProductId(UUID.randomUUID()), "Somewhere I belong", linkinPark, 2003, 6.99d, 0, "msm", Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora2));
+        Product lyingFromYouMP3     = new Product(new ProductId(UUID.randomUUID()), "Lying from You",     linkinPark, 2003, 6.99d, 0, "msm", Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora3));
+        Product hitTheFloorMP3      = new Product(new ProductId(UUID.randomUUID()), "Hit the Floor",      linkinPark, 2003, 6.99d, 0, "msm", Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora4));
+        Product easierToRunMP3      = new Product(new ProductId(UUID.randomUUID()), "Easier to Run",      linkinPark, 2003, 7.99d, 0, "msm", Medium.MP3, warnerBrothersRecords, List.of(), List.of(meteora5));
         productsDigital.addAll(List.of(dontStayMP3, somewhereIBelongMP3, lyingFromYouMP3, hitTheFloorMP3, easierToRunMP3));
 
-        Product theAwakeningMP3 = new Product(new ProductId(UUID.randomUUID()), "The Awakening",   bleedFromWithin, 2009, 4.99d, 0, "x", Medium.MP3, risingRecords, List.of(), List.of(humanity1));
-        Product damnationMP3    = new Product(new ProductId(UUID.randomUUID()), "Damnation",       bleedFromWithin, 2009, 4.99d, 0, "x", Medium.MP3, risingRecords, List.of(), List.of(humanity2));
-        Product messiahMP3      = new Product(new ProductId(UUID.randomUUID()), "Messiah",         bleedFromWithin, 2009, 5.99d, 0, "x", Medium.MP3, risingRecords, List.of(), List.of(humanity3));
-        Product theFallOfManMP3 = new Product(new ProductId(UUID.randomUUID()), "The Fall of Man", bleedFromWithin, 2009, 5.99d, 0, "x", Medium.MP3, risingRecords, List.of(), List.of(humanity4));
-        Product monsterMP3      = new Product(new ProductId(UUID.randomUUID()), "Monster",         bleedFromWithin, 2009, 5.99d, 0, "x", Medium.MP3, risingRecords, List.of(), List.of(humanity5));
+        Product theAwakeningMP3 = new Product(new ProductId(UUID.randomUUID()), "The Awakening",   bleedFromWithin, 2009, 4.99d, 0, "msm", Medium.MP3, risingRecords, List.of(), List.of(humanity1));
+        Product damnationMP3    = new Product(new ProductId(UUID.randomUUID()), "Damnation",       bleedFromWithin, 2009, 4.99d, 0, "msm", Medium.MP3, risingRecords, List.of(), List.of(humanity2));
+        Product messiahMP3      = new Product(new ProductId(UUID.randomUUID()), "Messiah",         bleedFromWithin, 2009, 5.99d, 0, "msm", Medium.MP3, risingRecords, List.of(), List.of(humanity3));
+        Product theFallOfManMP3 = new Product(new ProductId(UUID.randomUUID()), "The Fall of Man", bleedFromWithin, 2009, 5.99d, 0, "msm", Medium.MP3, risingRecords, List.of(), List.of(humanity4));
+        Product monsterMP3      = new Product(new ProductId(UUID.randomUUID()), "Monster",         bleedFromWithin, 2009, 5.99d, 0, "msm", Medium.MP3, risingRecords, List.of(), List.of(humanity5));
         productsDigital.addAll(List.of(theAwakeningMP3, damnationMP3, messiahMP3, theFallOfManMP3, monsterMP3));
     }
 

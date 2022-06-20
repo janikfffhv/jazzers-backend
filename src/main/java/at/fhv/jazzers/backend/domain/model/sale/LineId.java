@@ -30,6 +30,8 @@ public class LineId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LineId lineId = (LineId) o;
+        System.out.println("ID 1: " + id);
+        System.out.println("ID 2: " + lineId.id);
         return id.equals(lineId.id);
     }
 

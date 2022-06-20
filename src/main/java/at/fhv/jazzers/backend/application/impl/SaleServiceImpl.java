@@ -111,6 +111,11 @@ public class SaleServiceImpl implements SaleService {
                 .map(lineDTO -> new Line(new LineId(lineDTO.getLineId()), lineDTO.getAmountPurchased(), lineDTO.getAmountRefunded(), productRepository.byId(new ProductId(lineDTO.getProductId())).orElseThrow()))
                 .collect(Collectors.toList());
 
+        System.out.println("Neue Lines: " + linesNew);
+
+        for(LineDTO lineDTO : linesDTO) {
+            System.out.println("LineId : " + lineDTO.getLineId());
+        }
         optionalSale.get().updateRefunds(linesNew);
 
         entityManager.getTransaction().begin();
