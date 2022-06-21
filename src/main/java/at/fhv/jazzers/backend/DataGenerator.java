@@ -146,7 +146,7 @@ public class DataGenerator {
         Product damnationMP3    = new Product(new ProductId(UUID.randomUUID()), "Damnation",       bleedFromWithin, 2009, 4.99d, 0, "msm", Medium.MP3, risingRecords, List.of(), List.of(humanity2));
         Product messiahMP3      = new Product(new ProductId(UUID.randomUUID()), "Messiah",         bleedFromWithin, 2009, 5.99d, 0, "msm", Medium.MP3, risingRecords, List.of(), List.of(humanity3));
         Product theFallOfManMP3 = new Product(new ProductId(UUID.randomUUID()), "The Fall of Man", bleedFromWithin, 2009, 5.99d, 0, "msm", Medium.MP3, risingRecords, List.of(), List.of(humanity4));
-        Product monsterMP3      = new Product(new ProductId(UUID.randomUUID()), "Monster",         bleedFromWithin, 2009, 5.99d, 0, "msm", Medium.MP3, risingRecords, List.of(), List.of(humanity5));
+        Product monsterMP3      = new Product(new ProductId(UUID.randomUUID()), "Monster",         bleedFromWithin, 2009, 5.99d, 0, "ee", Medium.MP3, risingRecords, List.of(), List.of(humanity5));
         productsDigital.addAll(List.of(theAwakeningMP3, damnationMP3, messiahMP3, theFallOfManMP3, monsterMP3));
     }
 
