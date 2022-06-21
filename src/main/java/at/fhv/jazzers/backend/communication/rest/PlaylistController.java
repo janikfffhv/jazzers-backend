@@ -33,4 +33,18 @@ public class PlaylistController {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+
+    @GET
+    @Path("/collection/ownership")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ownership(@QueryParam("username") @DefaultValue("") String username, @QueryParam("password") @DefaultValue("") String password, @QueryParam("productName") @DefaultValue("") String productName) {
+        List<DigitalProductDTO> productsDTO = customerService.collection(username);
+
+        for(DigitalProductDTO product : productsDTO) {
+            if (product.getTitle().equals(productName)) {
+                return Response.status(Response.Status.OK).build();
+            }
+        }
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+    }
 }
