@@ -10,4 +10,7 @@
   <component name="ProjectType">
     <option name="id" value="jpab" />
   </component>
+  <component name="SQLPlugin.ProjectConfiguration">
+    <queries />
+  </component>
 </project>
