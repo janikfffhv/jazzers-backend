@@ -1,0 +1,177 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "jazzers-backend-1.0-SNAPSHOT.war",
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "/jazzers-backend-1.0-SNAPSHOT"
+  } ],
+  "paths" : {
+    "/api/v1/login/customer" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "password",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        }, {
+          "name" : "username",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/playlist/collection" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "password",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        }, {
+          "name" : "username",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/playlist/collection/ownership" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "password",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        }, {
+          "name" : "productName",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        }, {
+          "name" : "username",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/product/download" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "password",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        }, {
+          "name" : "productId",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        }, {
+          "name" : "username",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/product/searchDigital" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "titleOrInterpret",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/sale/customerPurchase" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "iban",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        }, {
+          "name" : "productId",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        }, {
+          "name" : "username",
+          "in" : "query",
+          "schema" : {
+            "default" : "",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    }
+  }
+}
