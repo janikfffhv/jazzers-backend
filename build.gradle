@@ -41,6 +41,14 @@ dependencies {
     implementation 'javax.ws.rs:javax.ws.rs-api:2.0'
     // OpenAPI (for OAS - might be optional)
     implementation 'org.eclipse.microprofile.openapi:microprofile-openapi-api:3.0'
+    // https://mvnrepository.com/artifact/org.microprofile-ext.openapi-ext/swagger-ui
+    implementation 'org.microprofile-ext.openapi-ext:openapi-ui:1.1.5'
+
+    // https://mvnrepository.com/artifact/org.wildfly/wildfly-undertow
+    implementation 'org.wildfly:wildfly-undertow:26.1.1.Final'
+
+
+
 
     // H2
     testImplementation 'com.h2database:h2:2.1.210'
