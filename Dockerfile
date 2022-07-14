@@ -1,6 +1,6 @@
 FROM quay.io/wildfly/wildfly
-COPY ./src/main/resources/META-INF/standalone-full1.xml /opt/jboss/wildfly/standalone/configuration/
-COPY ./src/main/resources/META-INF/index.html /opt/jboss/wildfly/openapi/
+COPY ./standalone-full1.xml /opt/jboss/wildfly/standalone/configuration/
+COPY ./index.html /opt/jboss/wildfly/openapi/
 RUN /opt/jboss/wildfly/bin/add-user.sh -u admin -p admin --silent
 
 RUN /opt/jboss/wildfly/bin/add-user.sh -a -u user -p user --silent
